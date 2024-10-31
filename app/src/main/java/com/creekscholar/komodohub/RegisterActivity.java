@@ -34,11 +34,16 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 String confirmPassword = confirmPasswordEditText.getText().toString();
+
+                //create an object of the database class (DatabaseConnection)
+                DatabaseConnection dbConn = new DatabaseConnection(getApplicationContext(), "komodohubDB", null, 1);
                 if(username.length()==0 || email.length()==0 || password.length()==0 || confirmPassword.length()==0){
                     Toast.makeText(getApplicationContext(), "Please fill all details", Toast.LENGTH_SHORT).show();
                 }else{
                     if(password.compareTo(confirmPassword)==0){
                         if(isValid(password)){
+                            // call the register method to save the data into the database
+                            dbConn.register(username, email, password);
                             Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         }else{
