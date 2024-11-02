@@ -24,4 +24,9 @@
     <string name="haveAccount">Already Have An Account?</string>
     <string name="signin">Sign In</string>
     <string name="register">Register</string>
+    <string name="role">Role</string>
+    <string name="roleOfParticipants">Role(\"SystemAdmin, SchoolAdmin, Teacher, Student\")</string>
+    <string name="signInAccount">Sign In</string>
+    <string name="login_email">Email</string>
+    <string name="loginPassword">Password</string>
 </resources>

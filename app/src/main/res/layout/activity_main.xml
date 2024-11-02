@@ -1,10 +1,94 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to Komodo Hub"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:padding="16dp" />
+
+    <!-- Layout for SystemAdmin and SchoolAdmin -->
+    <LinearLayout
+        android:id="@+id/adminLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/manageSchoolsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Schools"
+            android:onClick="onAdminButtonClick"/>
+    </LinearLayout>
+
+    <!-- Layout for Teachers -->
+    <LinearLayout
+        android:id="@+id/teacherLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/manageClassesButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Classes"
+            android:onClick="onTeacherButtonClick"/>
+
+        <Button
+            android:id="@+id/manageContentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Content"
+            android:onClick="onTeacherButtonClick"/>
+    </LinearLayout>
+
+    <!-- Layout for Students -->
+    <LinearLayout
+        android:id="@+id/studentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/learningContentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Learning Content"
+            android:onClick="onStudentButtonClick"/>
+
+        <Button
+            android:id="@+id/sightingsReportButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Report Sightings"
+            android:onClick="onStudentButtonClick"/>
+    </LinearLayout>
+
+    <!-- Layout for Visitors -->
+    <LinearLayout
+        android:id="@+id/visitorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/explorePublicContentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Explore Public Content"
+            android:onClick="onVisitorButtonClick"/>
+    </LinearLayout>
+
+</LinearLayout>
