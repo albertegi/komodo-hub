@@ -39,9 +39,10 @@ public class MainActivity extends AppCompatActivity {
         // Get the user's role from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE);
         String userRole = sharedPreferences.getString("UserRole", "");
+        String email = sharedPreferences.getString("UserEmail","");
 
         // Set a welcome message based on the role
-        welcomeTextView.setText("Welcome to Komodo Hub! You are logged in as: " + userRole);
+        welcomeTextView.setText("Welcome to Komodo Hub! " + email + " You are logged in as: " + userRole);
 
 
 

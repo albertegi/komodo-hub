@@ -23,8 +23,6 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
 
 
-
-
         manageSchoolsButton = findViewById(R.id.manageSchoolsButton);
         viewCommunityButton = findViewById(R.id.viewCommunityButton);
 

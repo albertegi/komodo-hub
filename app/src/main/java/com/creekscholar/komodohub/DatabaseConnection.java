@@ -5,15 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 public class DatabaseConnection extends SQLiteOpenHelper {
 
-//    private static final String DATABASE_NAME = "educationApp.db";
-//    private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_NAME = "komodohubdatabase.db";
+    private static final String DATABASE_NAME = "komodo_hub.db";
     private static final int DATABASE_VERSION = 1;
 
     // Table and column names for Users table
@@ -35,59 +34,20 @@ public class DatabaseConnection extends SQLiteOpenHelper {
             + COLUMN_ROLE + " TEXT NOT NULL CHECK (Role IN ('SystemAdmin', 'SchoolAdmin', 'Teacher', 'Student')), "
             + COLUMN_PROFILE_PICTURE + " TEXT);";
 
+    // Insert a default SystemAdmin user
+    private static final String INSERT_SYSTEM_ADMIN = "INSERT INTO " + TABLE_USERS + " ("
+            + COLUMN_NAME + ", "
+            + COLUMN_EMAIL + ", "
+            + COLUMN_PASSWORD + ", "
+            + COLUMN_ROLE + ", "
+            + COLUMN_PROFILE_PICTURE + ") VALUES ("
+            + "'Albert Egi', "               // Name
+            + "'albertegi90@gmail.com', "      // Email
+            + "'password123', "              // Password (Consider hashing in a real app)
+            + "'SystemAdmin', "              // Role
+            + "NULL);";                      // Profile Picture (null if not specified)
 
-    // User table
-//    private static final String TABLE_USERS = "CREATE TABLE Users (" +
-//            "UserID INTEGER PRIMARY KEY AUTOINCREMENT," +
-//            "Name TEXT NOT NULL," +
-//            "Email TEXT NOT NULL UNIQUE," +
-//            "Password TEXT NOT NULL," +
-//            "Role TEXT CHECK (Role IN ('SystemAdmin', 'SchoolAdmin', 'Teacher', 'Student')) NOT NULL," +
-//            "ProfilePicture TEXT);";
 
-
-
-
-//    public DatabaseConnection(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-//        super(context, name, factory, version);
-//    }
-
-//    @Override
-//    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-////        String sqlqry1 = "create table users(username text, email text, password text)";
-////        sqLiteDatabase.execSQL(sqlqry1);
-//
-//    }
-
-//    @Override
-//    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-//
-//    }
-
-//    public void register(String username, String email, String password){
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put("username", username);
-//        contentValues.put("email", email);
-//        contentValues.put("password",password);
-//
-//        // create an object of sqlite database
-//        SQLiteDatabase db = getWritableDatabase();
-//        db.insert("users", null, contentValues);
-//        db.close();
-//    }
-
-//    public int login(String username, String password){
-//        int result = 0;
-//        String str[] = new String[2];
-//        str[0] = username;
-//        str[1] = password;
-//        SQLiteDatabase db = getReadableDatabase();
-//        Cursor cursor = db.rawQuery("select * from users where username=? and password=?", str);
-//        if(cursor.moveToFirst()){
-//            result = 1;
-//        }
-//        return result;
-//    }
 
     public DatabaseConnection(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -97,19 +57,18 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_USERS);
-        //db.execSQL(CREATE_TABLE_SCHOOLS);
-        // Execute other CREATE TABLE statements here
+        Log.d("DatabaseHelper", "Users table created");
+        db.execSQL(INSERT_SYSTEM_ADMIN);
+        Log.d("DatabaseHelper", "SystemAdmin seeded into Users table");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS Users");
-        //db.execSQL("DROP TABLE IF EXISTS Schools");
-        // Drop other tables as needed
         onCreate(db);
     }
 
-    // Sample method for user login
+    // method for user login
     public boolean checkUserCredentials(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Users WHERE Email = ? AND Password = ?", new String[]{email, password});
@@ -118,7 +77,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         return exists;
     }
 
-    // Sample method for adding a user
+    // method for adding a user
     public long addUser(String name, String email, String password, String role) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

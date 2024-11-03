@@ -13,11 +13,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
-//    EditText usernameEditText, passwordEditText;
-//    Button loginBtn, createAccountBtn;
 
-//    private UserDao userDao;
-//    private EditText emailEditText, passwordEditText;
 
     private EditText emailEditText;
     private EditText passwordEditText;
