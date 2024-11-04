@@ -48,7 +48,11 @@ public class AdminActivity extends AppCompatActivity {
 
 
         // Initialize database helper
-        DatabaseConnection dbConnection = new DatabaseConnection(this);
+        //DatabaseConnection dbConnection = new DatabaseConnection(this);
+
+        // Initialize database helper correctly
+        databaseConnection = new DatabaseConnection(this);
+
 
 
 

@@ -13,7 +13,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "komodo_hub.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Table and column names for Users table
     public static final String TABLE_USERS = "Users";
