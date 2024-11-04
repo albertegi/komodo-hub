@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout studentLayout;
     private LinearLayout visitorLayout;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,23 +80,43 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onCommunitiesButtonClick(View view){
+        // Go to Admin related activities (Community Management)
+        Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
+        startActivity(intent);
+    }
+
+    public void onSendEmailsButtonClick(View view){
+        // Go to Admin related activities (Send Emails)
+        Intent intent = new Intent(MainActivity.this, SendEmailsActivity.class);
+        startActivity(intent);
+    }
+
+    public void exitButtonClick(View view){
+        // Exit
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
 //    public void onTeacherButtonClick(View view) {
 //        // Navigate to Teacher related activities (e.g., Class management)
-//        Intent intent = new Intent(MainActivity.this, TeacherActivity.class);
+//        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 //        startActivity(intent);
 //    }
+
+
 //
-//    public void onStudentButtonClick(View view) {
-//        // Navigate to Student related activities (e.g., Content, Sighting Reports)
-//        Intent intent = new Intent(MainActivity.this, StudentActivity.class);
-//        startActivity(intent);
-//    }
+    public void onStudentButtonClick(View view) {
+        // Navigate to Student related activities (e.g., Content, Sighting Reports)
+        Intent intent = new Intent(MainActivity.this, StudentActivity.class);
+        startActivity(intent);
+    }
 //
-//    public void onVisitorButtonClick(View view) {
-//        // For visitors, allow them to explore basic public information
-//        Intent intent = new Intent(MainActivity.this, VisitorActivity.class);
-//        startActivity(intent);
-//    }
+    public void onVisitorButtonClick(View view) {
+        // For visitors, allow them to explore basic public information
+        Intent intent = new Intent(MainActivity.this, VisitorActivity.class);
+        startActivity(intent);
+    }
 
 
 }

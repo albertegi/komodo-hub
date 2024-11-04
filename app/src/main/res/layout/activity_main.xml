@@ -14,6 +14,7 @@
         android:padding="16dp" />
 
     <!-- Layout for SystemAdmin and SchoolAdmin -->
+
     <LinearLayout
         android:id="@+id/adminLayout"
         android:layout_width="match_parent"
@@ -27,7 +28,30 @@
             android:layout_height="wrap_content"
             android:text="Manage Schools"
             android:onClick="onAdminButtonClick"/>
+
+        <Button
+            android:id="@+id/manageCommunitiesButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Communities"
+            android:onClick="onCommunitiesButtonClick"/>
+
+        <Button
+            android:id="@+id/sendEmailsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Emails"
+            android:onClick="onSendEmailsButtonClick"/>
+
+        <Button
+            android:id="@+id/ExitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exit"
+            android:onClick="exitButtonClick"/>
     </LinearLayout>
+
+
 
     <!-- Layout for Teachers -->
     <LinearLayout
@@ -53,6 +77,7 @@
     </LinearLayout>
 
     <!-- Layout for Students -->
+
     <LinearLayout
         android:id="@+id/studentLayout"
         android:layout_width="match_parent"
@@ -76,6 +101,7 @@
     </LinearLayout>
 
     <!-- Layout for Visitors -->
+
     <LinearLayout
         android:id="@+id/visitorLayout"
         android:layout_width="match_parent"

@@ -13,7 +13,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "komodo_hub.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Table and column names for Users table
     public static final String TABLE_USERS = "Users";
@@ -23,6 +23,16 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     public static final String COLUMN_PASSWORD = "Password";
     public static final String COLUMN_ROLE = "Role";
     public static final String COLUMN_PROFILE_PICTURE = "ProfilePicture";
+
+
+    // Table and column names for Schools table
+    public static final String TABLE_SCHOOLS = "Schools";
+    public static final String COLUMN_SCHOOL_ID = "SchoolID";
+    public static final String COLUMN_SCHOOL_NAME = "SchoolName";
+    public static final String COLUMN_ADDRESS = "Address";
+    public static final String COLUMN_SUBSCRIPTION_STATUS = "SubscriptionStatus";
+    public static final String COLUMN_PAYMENT_DETAILS = "PaymentDetails";
+    public static final String COLUMN_SCHOOL_ADMIN_ID = "SchoolAdminID";
 
 
     // SQL statement for creating Users table
@@ -48,18 +58,28 @@ public class DatabaseConnection extends SQLiteOpenHelper {
             + "NULL);";                      // Profile Picture (null if not specified)
 
 
+    // SQL statement for creating Schools table
+    private static final String CREATE_TABLE_SCHOOLS = "CREATE TABLE " + TABLE_SCHOOLS + "("
+            + COLUMN_SCHOOL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_SCHOOL_NAME + " TEXT NOT NULL, "
+            + COLUMN_ADDRESS + " TEXT NOT NULL, "
+            + COLUMN_SUBSCRIPTION_STATUS + " TEXT NOT NULL CHECK (SubscriptionStatus IN ('Active', 'Inactive')), "
+            + COLUMN_PAYMENT_DETAILS + " TEXT, "
+            + COLUMN_SCHOOL_ADMIN_ID + " INTEGER, "
+            + "FOREIGN KEY(" + COLUMN_SCHOOL_ADMIN_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE);";
 
     public DatabaseConnection(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_USERS);
-        Log.d("DatabaseHelper", "Users table created");
+        db.execSQL(CREATE_TABLE_SCHOOLS);
+        Log.d("DatabaseConnection", "Users table created");
         db.execSQL(INSERT_SYSTEM_ADMIN);
-        Log.d("DatabaseHelper", "SystemAdmin seeded into Users table");
+        Log.d("DatabaseConnection", "SystemAdmin seeded into Users table");
+
     }
 
     @Override
@@ -87,4 +107,54 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         values.put("Role", role);
         return db.insert("Users", null, values);
     }
+
+    // Method to add a new SchoolAdmin user
+    public long addSchoolAdmin(String name, String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, name);
+        values.put(COLUMN_EMAIL, email);
+        values.put(COLUMN_PASSWORD, password);
+        values.put(COLUMN_ROLE, "SchoolAdmin");
+        values.put(COLUMN_PROFILE_PICTURE, (String) null);
+
+        return db.insert(TABLE_USERS, null, values);
+    }
+
+    // Method to retrieve a SchoolAdmin user ID by email
+    public long getSchoolAdminIdByEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_USER_ID};
+        String selection = COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = {email};
+
+        Cursor cursor = db.query(TABLE_USERS, columns, selection, selectionArgs, null, null, null);
+        long userId = -1;
+        if (cursor.moveToFirst()) {
+            userId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_USER_ID));
+        }
+        cursor.close();
+        return userId;
+    }
+
+    // Method to add a new school linked to a SchoolAdmin user
+    public long addSchool(String schoolName, String address, String subscriptionStatus, String paymentDetails, long schoolAdminId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_SCHOOL_NAME, schoolName);
+        values.put(COLUMN_ADDRESS, address);
+        values.put(COLUMN_SUBSCRIPTION_STATUS, subscriptionStatus);
+        values.put(COLUMN_PAYMENT_DETAILS, paymentDetails);
+        values.put(COLUMN_SCHOOL_ADMIN_ID, schoolAdminId);
+
+        return db.insert(TABLE_SCHOOLS, null, values);
+    }
+
+
+
+
+
+
+
+
 }
