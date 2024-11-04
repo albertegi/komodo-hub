@@ -47,13 +47,7 @@ public class AdminActivity extends AppCompatActivity {
         addSchoolButton = findViewById(R.id.add_school_button);
 
 
-        // Initialize database helper
-        //DatabaseConnection dbConnection = new DatabaseConnection(this);
-
-        // Initialize database helper correctly
         databaseConnection = new DatabaseConnection(this);
-
-
 
 
         addSchoolButton.setOnClickListener(v -> {

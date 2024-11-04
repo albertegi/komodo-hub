@@ -16,6 +16,16 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 3;
 
     // Table and column names for Users table
+//    public static final String TABLE_USERS = "Users";
+//    public static final String COLUMN_USER_ID = "UserID";
+//    public static final String COLUMN_NAME = "Name";
+//    public static final String COLUMN_EMAIL = "Email";
+//    public static final String COLUMN_PASSWORD = "Password";
+//    public static final String COLUMN_ROLE = "Role";
+//    public static final String COLUMN_PROFILE_PICTURE = "ProfilePicture";
+    // Table and column names for Users table
+
+    // Table and column names for Users table
     public static final String TABLE_USERS = "Users";
     public static final String COLUMN_USER_ID = "UserID";
     public static final String COLUMN_NAME = "Name";
@@ -23,7 +33,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     public static final String COLUMN_PASSWORD = "Password";
     public static final String COLUMN_ROLE = "Role";
     public static final String COLUMN_PROFILE_PICTURE = "ProfilePicture";
-
+    public static final String COLUMN_USER_SCHOOL_ID = "UserSchoolID";  // Renamed to avoid conflict
 
     // Table and column names for Schools table
     public static final String TABLE_SCHOOLS = "Schools";
@@ -35,14 +45,46 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     public static final String COLUMN_SCHOOL_ADMIN_ID = "SchoolAdminID";
 
 
+
+//    // Table and column names for Schools table
+//    public static final String TABLE_SCHOOLS = "Schools";
+//    public static final String COLUMN_SCHOOL_ID = "SchoolID";
+//    public static final String COLUMN_SCHOOL_NAME = "SchoolName";
+//    public static final String COLUMN_ADDRESS = "Address";
+//    public static final String COLUMN_SUBSCRIPTION_STATUS = "SubscriptionStatus";
+//    public static final String COLUMN_PAYMENT_DETAILS = "PaymentDetails";
+//    public static final String COLUMN_SCHOOL_ADMIN_ID = "SchoolAdminID";
+
+//    // Table and column names for Schools table
+//    public static final String TABLE_SCHOOLS = "Schools";
+//    public static final String COLUMN_SCHOOL_ID = "SchoolID";
+//    public static final String COLUMN_SCHOOL_NAME = "SchoolName";
+//    public static final String COLUMN_ADDRESS = "Address";
+//    public static final String COLUMN_SUBSCRIPTION_STATUS = "SubscriptionStatus";
+//    public static final String COLUMN_PAYMENT_DETAILS = "PaymentDetails";
+//    public static final String COLUMN_SCHOOL_ADMIN_ID = "SchoolAdminID";
+
+
     // SQL statement for creating Users table
+//    private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
+//            + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+//            + COLUMN_NAME + " TEXT NOT NULL, "
+//            + COLUMN_EMAIL + " TEXT NOT NULL UNIQUE, "
+//            + COLUMN_PASSWORD + " TEXT NOT NULL, "
+//            + COLUMN_ROLE + " TEXT NOT NULL CHECK (Role IN ('SystemAdmin', 'SchoolAdmin', 'Teacher', 'Student')), "
+//            + COLUMN_PROFILE_PICTURE + " TEXT);";
+
+    // SQL statement for creating Users table with updated school ID reference
     private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_NAME + " TEXT NOT NULL, "
             + COLUMN_EMAIL + " TEXT NOT NULL UNIQUE, "
             + COLUMN_PASSWORD + " TEXT NOT NULL, "
             + COLUMN_ROLE + " TEXT NOT NULL CHECK (Role IN ('SystemAdmin', 'SchoolAdmin', 'Teacher', 'Student')), "
-            + COLUMN_PROFILE_PICTURE + " TEXT);";
+            + COLUMN_PROFILE_PICTURE + " TEXT, "
+            + COLUMN_USER_SCHOOL_ID + " INTEGER, "  // Updated reference name
+            + "FOREIGN KEY(" + COLUMN_USER_SCHOOL_ID + ") REFERENCES " + TABLE_SCHOOLS + "(" + COLUMN_SCHOOL_ID + ") ON DELETE CASCADE"
+            + ");";
 
     // Insert a default SystemAdmin user
     private static final String INSERT_SYSTEM_ADMIN = "INSERT INTO " + TABLE_USERS + " ("
@@ -59,14 +101,25 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
 
     // SQL statement for creating Schools table
+//    private static final String CREATE_TABLE_SCHOOLS = "CREATE TABLE " + TABLE_SCHOOLS + "("
+//            + COLUMN_SCHOOL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+//            + COLUMN_SCHOOL_NAME + " TEXT NOT NULL, "
+//            + COLUMN_ADDRESS + " TEXT NOT NULL, "
+//            + COLUMN_SUBSCRIPTION_STATUS + " TEXT NOT NULL CHECK (SubscriptionStatus IN ('Active', 'Inactive')), "
+//            + COLUMN_PAYMENT_DETAILS + " TEXT, "
+//            + COLUMN_SCHOOL_ADMIN_ID + " INTEGER, "
+//            + "FOREIGN KEY(" + COLUMN_SCHOOL_ADMIN_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE);";
+
+    // SQL statement for creating Schools table
     private static final String CREATE_TABLE_SCHOOLS = "CREATE TABLE " + TABLE_SCHOOLS + "("
             + COLUMN_SCHOOL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_SCHOOL_NAME + " TEXT NOT NULL, "
+            + COLUMN_SCHOOL_NAME + " TEXT NOT NULL UNIQUE, "
             + COLUMN_ADDRESS + " TEXT NOT NULL, "
             + COLUMN_SUBSCRIPTION_STATUS + " TEXT NOT NULL CHECK (SubscriptionStatus IN ('Active', 'Inactive')), "
             + COLUMN_PAYMENT_DETAILS + " TEXT, "
             + COLUMN_SCHOOL_ADMIN_ID + " INTEGER, "
-            + "FOREIGN KEY(" + COLUMN_SCHOOL_ADMIN_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE);";
+            + "FOREIGN KEY(" + COLUMN_SCHOOL_ADMIN_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE"
+            + ");";
 
     public DatabaseConnection(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -13,7 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:padding="16dp" />
 
-    <!-- Layout for SystemAdmin and SchoolAdmin -->
+    <!-- Layout for SystemAdmin -->
 
     <LinearLayout
         android:id="@+id/adminLayout"
@@ -49,6 +49,51 @@
             android:layout_height="wrap_content"
             android:text="Exit"
             android:onClick="exitButtonClick"/>
+    </LinearLayout>
+
+    <!-- Layout for SchoolAdmin -->
+
+    <LinearLayout
+        android:id="@+id/schoolAdminLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/AddTeacherButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Teacher"
+            android:onClick="onAddTeacherButtonClick"/>
+
+        <Button
+            android:id="@+id/viewTeacherButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Teacher"
+            android:onClick="onViewTeacherButtonClick"/>
+
+        <Button
+            android:id="@+id/addStudentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Student"
+            android:onClick="onAddStudentButtonClick"/>
+
+        <Button
+            android:id="@+id/viewStudentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Students"
+            android:onClick="onViewStudentButtonClick"/>
+
+        <Button
+            android:id="@+id/exitSchoolAdminButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exit"
+            android:onClick="exitSchoolAdminButtonClick"/>
     </LinearLayout>
 
 

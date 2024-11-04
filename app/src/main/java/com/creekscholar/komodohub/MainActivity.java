@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     private TextView welcomeTextView;
     private LinearLayout adminLayout;
+    private LinearLayout schoolAdmLayout;
     private LinearLayout teacherLayout;
     private LinearLayout studentLayout;
     private LinearLayout visitorLayout;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         welcomeTextView = findViewById(R.id.welcomeText);
         adminLayout = findViewById(R.id.adminLayout);
+        schoolAdmLayout = findViewById(R.id.schoolAdminLayout);
         teacherLayout = findViewById(R.id.teacherLayout);
         studentLayout = findViewById(R.id.studentLayout);
         visitorLayout = findViewById(R.id.visitorLayout);
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Hide all role-based layouts by default
         adminLayout.setVisibility(View.GONE);
+        schoolAdmLayout.setVisibility(View.GONE);
         teacherLayout.setVisibility(View.GONE);
         studentLayout.setVisibility(View.GONE);
         visitorLayout.setVisibility(View.GONE);
@@ -57,8 +60,10 @@ public class MainActivity extends AppCompatActivity {
         // Show the appropriate layout based on the user's role
         switch (userRole) {
             case "SystemAdmin":
-            case "SchoolAdmin":
                 adminLayout.setVisibility(View.VISIBLE);
+                break;
+            case "SchoolAdmin":
+                schoolAdmLayout.setVisibility(View.VISIBLE);
                 break;
             case "Teacher":
                 teacherLayout.setVisibility(View.VISIBLE);
@@ -116,6 +121,11 @@ public class MainActivity extends AppCompatActivity {
         // For visitors, allow them to explore basic public information
         Intent intent = new Intent(MainActivity.this, VisitorActivity.class);
         startActivity(intent);
+    }
+
+    public void onAddTeacherButtonClick(View view){
+        // for Adding of teachers
+        Intent intent = new Intent(MainActivity.this, AddTeacherActivity.class);
     }
 
 

@@ -18,13 +18,13 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.053" />
+        app:layout_constraintVertical_bias="0.037" />
 
     <EditText
         android:id="@+id/admin_name_input"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="32dp"
         android:hint="Admin Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
