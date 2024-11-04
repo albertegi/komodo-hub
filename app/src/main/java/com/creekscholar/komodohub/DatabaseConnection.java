@@ -46,34 +46,6 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
 
 
-//    // Table and column names for Schools table
-//    public static final String TABLE_SCHOOLS = "Schools";
-//    public static final String COLUMN_SCHOOL_ID = "SchoolID";
-//    public static final String COLUMN_SCHOOL_NAME = "SchoolName";
-//    public static final String COLUMN_ADDRESS = "Address";
-//    public static final String COLUMN_SUBSCRIPTION_STATUS = "SubscriptionStatus";
-//    public static final String COLUMN_PAYMENT_DETAILS = "PaymentDetails";
-//    public static final String COLUMN_SCHOOL_ADMIN_ID = "SchoolAdminID";
-
-//    // Table and column names for Schools table
-//    public static final String TABLE_SCHOOLS = "Schools";
-//    public static final String COLUMN_SCHOOL_ID = "SchoolID";
-//    public static final String COLUMN_SCHOOL_NAME = "SchoolName";
-//    public static final String COLUMN_ADDRESS = "Address";
-//    public static final String COLUMN_SUBSCRIPTION_STATUS = "SubscriptionStatus";
-//    public static final String COLUMN_PAYMENT_DETAILS = "PaymentDetails";
-//    public static final String COLUMN_SCHOOL_ADMIN_ID = "SchoolAdminID";
-
-
-    // SQL statement for creating Users table
-//    private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
-//            + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-//            + COLUMN_NAME + " TEXT NOT NULL, "
-//            + COLUMN_EMAIL + " TEXT NOT NULL UNIQUE, "
-//            + COLUMN_PASSWORD + " TEXT NOT NULL, "
-//            + COLUMN_ROLE + " TEXT NOT NULL CHECK (Role IN ('SystemAdmin', 'SchoolAdmin', 'Teacher', 'Student')), "
-//            + COLUMN_PROFILE_PICTURE + " TEXT);";
-
     // SQL statement for creating Users table with updated school ID reference
     private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -95,20 +67,11 @@ public class DatabaseConnection extends SQLiteOpenHelper {
             + COLUMN_PROFILE_PICTURE + ") VALUES ("
             + "'Albert Egi', "               // Name
             + "'albertegi90@gmail.com', "      // Email
-            + "'password123', "              // Password (Consider hashing in a real app)
+            + "'password123', "              // Password
             + "'SystemAdmin', "              // Role
-            + "NULL);";                      // Profile Picture (null if not specified)
+            + "NULL);";                      // Profile Picture
 
 
-    // SQL statement for creating Schools table
-//    private static final String CREATE_TABLE_SCHOOLS = "CREATE TABLE " + TABLE_SCHOOLS + "("
-//            + COLUMN_SCHOOL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-//            + COLUMN_SCHOOL_NAME + " TEXT NOT NULL, "
-//            + COLUMN_ADDRESS + " TEXT NOT NULL, "
-//            + COLUMN_SUBSCRIPTION_STATUS + " TEXT NOT NULL CHECK (SubscriptionStatus IN ('Active', 'Inactive')), "
-//            + COLUMN_PAYMENT_DETAILS + " TEXT, "
-//            + COLUMN_SCHOOL_ADMIN_ID + " INTEGER, "
-//            + "FOREIGN KEY(" + COLUMN_SCHOOL_ADMIN_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE);";
 
     // SQL statement for creating Schools table
     private static final String CREATE_TABLE_SCHOOLS = "CREATE TABLE " + TABLE_SCHOOLS + "("
@@ -203,7 +166,32 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         return db.insert(TABLE_SCHOOLS, null, values);
     }
 
+    // Method to add a Teacher
+    public long addTeacher(String name, String email, String password, long schoolId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, name);
+        values.put(COLUMN_EMAIL, email);
+        values.put(COLUMN_PASSWORD, password); // Consider hashing for production
+        values.put(COLUMN_ROLE, "Teacher");
+        values.put(COLUMN_USER_SCHOOL_ID, schoolId);  // Use COLUMN_USER_SCHOOL_ID here
+        return db.insert(TABLE_USERS, null, values);
+    }
 
+    // Method to retrieve schoolId based on the SchoolAdminID
+    public long getSchoolIdByAdminId(long schoolAdminId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_SCHOOLS, new String[]{COLUMN_SCHOOL_ID},
+                COLUMN_SCHOOL_ADMIN_ID + " = ?", new String[]{String.valueOf(schoolAdminId)},
+                null, null, null);
+
+        long schoolId = -1;
+        if (cursor.moveToFirst()) {
+            schoolId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHOOL_ID));
+        }
+        cursor.close();
+        return schoolId;
+    }
 
 
 

@@ -123,9 +123,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void onAddTeacherButtonClick(View view){
         // for Adding of teachers
         Intent intent = new Intent(MainActivity.this, AddTeacherActivity.class);
+        //intent.putExtra("SchoolAdminID",schoolAdminId);
+        startActivity(intent);
     }
 
 
