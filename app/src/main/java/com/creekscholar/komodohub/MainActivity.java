@@ -131,5 +131,20 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onAddStudentButtonClick(View view){
+        // for Adding of students
+        Intent intent = new Intent(MainActivity.this, AddStudentActivity.class);
+        //intent.putExtra("SchoolAdminID",schoolAdminId);
+        startActivity(intent);
+    }
+
+    public void onAllocateTeacherButtonClick(View view){
+        // for Adding of classes
+        Intent intent = new Intent(MainActivity.this, AddClassActivity.class);
+        //intent.putExtra("SchoolAdminID",schoolAdminId);
+        startActivity(intent);
+
+    }
+
 
 }

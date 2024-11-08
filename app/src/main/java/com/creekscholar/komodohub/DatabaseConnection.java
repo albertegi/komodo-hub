@@ -6,6 +6,19 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 
@@ -15,15 +28,6 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "komodo_hub.db";
     private static final int DATABASE_VERSION = 3;
 
-    // Table and column names for Users table
-//    public static final String TABLE_USERS = "Users";
-//    public static final String COLUMN_USER_ID = "UserID";
-//    public static final String COLUMN_NAME = "Name";
-//    public static final String COLUMN_EMAIL = "Email";
-//    public static final String COLUMN_PASSWORD = "Password";
-//    public static final String COLUMN_ROLE = "Role";
-//    public static final String COLUMN_PROFILE_PICTURE = "ProfilePicture";
-    // Table and column names for Users table
 
     // Table and column names for Users table
     public static final String TABLE_USERS = "Users";
@@ -45,8 +49,33 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     public static final String COLUMN_SCHOOL_ADMIN_ID = "SchoolAdminID";
 
 
+    // Table and column names for Teachers table
+    public static final String TABLE_TEACHERS = "Teachers";
+    public static final String COLUMN_TEACHER_ID = "TeacherID";
+    public static final String COLUMN_TEACHER_USER_ID = "TeacherUserID"; // Foreign key referencing Users
+    public static final String COLUMN_SPECIALIZATION = "Specialization";
+    public static final String COLUMN_HIRE_DATE = "HireDate";
 
-    // SQL statement for creating Users table with updated school ID reference
+
+    // Table and column names for Students table
+    public static final String TABLE_STUDENTS = "Students";
+    public static final String COLUMN_STUDENT_ID = "StudentID";
+    public static final String COLUMN_STUDENT_USER_ID = "StudentUserID"; // Foreign key referencing Users
+    public static final String COLUMN_GRADE_LEVEL = "GradeLevel";
+    public static final String COLUMN_ENROLLED_PROGRAM = "EnrolledProgram";
+    public static final String COLUMN_CLASS_ID = "ClassID";
+
+    // Table and column names for Classes table
+    public static final String TABLE_CLASSES = "Classes";
+    public static final String COLUMN_CLASSES_CLASS_ID = "ClassID";         // Primary key for Classes table
+    public static final String COLUMN_CLASSES_CLASS_NAME = "ClassName";
+    public static final String COLUMN_CLASSES_SUBJECT = "Subject";
+    public static final String COLUMN_CLASSES_TEACHER_ID = "TeacherID"; // Foreign key referencing Users (Teacher)
+    public static final String COLUMN_CLASSES_SCHOOL_ID = "ClassSchoolID";   // Foreign key referencing Schools// Foreign key referencing Schools
+
+
+
+    // SQL statement for creating Users table with school ID reference
     private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_NAME + " TEXT NOT NULL, "
@@ -57,6 +86,10 @@ public class DatabaseConnection extends SQLiteOpenHelper {
             + COLUMN_USER_SCHOOL_ID + " INTEGER, "  // Updated reference name
             + "FOREIGN KEY(" + COLUMN_USER_SCHOOL_ID + ") REFERENCES " + TABLE_SCHOOLS + "(" + COLUMN_SCHOOL_ID + ") ON DELETE CASCADE"
             + ");";
+
+
+
+
 
     // Insert a default SystemAdmin user
     private static final String INSERT_SYSTEM_ADMIN = "INSERT INTO " + TABLE_USERS + " ("
@@ -84,6 +117,50 @@ public class DatabaseConnection extends SQLiteOpenHelper {
             + "FOREIGN KEY(" + COLUMN_SCHOOL_ADMIN_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE"
             + ");";
 
+
+    // SQL statement for creating teachers table
+    private static final String CREATE_TABLE_TEACHERS = "CREATE TABLE " + TABLE_TEACHERS + "("
+            + COLUMN_TEACHER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_TEACHER_USER_ID + " INTEGER NOT NULL, " // Foreign key column for Users table
+            + COLUMN_SPECIALIZATION + " TEXT, "
+            + COLUMN_HIRE_DATE + " TEXT, "
+            + "FOREIGN KEY(" + COLUMN_TEACHER_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE"
+            + ");";
+
+    private static final String CREATE_TABLE_STUDENTS = "CREATE TABLE " + TABLE_STUDENTS + " ("
+            + COLUMN_STUDENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_STUDENT_USER_ID + " INTEGER NOT NULL, "
+            + COLUMN_GRADE_LEVEL + " TEXT, "
+            + COLUMN_ENROLLED_PROGRAM + " TEXT, "
+            + COLUMN_CLASS_ID + " INTEGER, "
+            + "FOREIGN KEY(" + COLUMN_STUDENT_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE, "
+            + "FOREIGN KEY(" + COLUMN_CLASS_ID + ") REFERENCES " + TABLE_CLASSES + "(" + COLUMN_CLASS_ID + ") ON DELETE SET NULL"
+            + ");";
+
+    private static final String CREATE_TABLE_CLASSES = "CREATE TABLE " + TABLE_CLASSES + " ("
+            + COLUMN_CLASSES_CLASS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_CLASSES_CLASS_NAME + " TEXT NOT NULL, "
+            + COLUMN_CLASSES_SUBJECT + " TEXT NOT NULL, "
+            + COLUMN_CLASSES_TEACHER_ID + " INTEGER, "
+            + COLUMN_CLASSES_SCHOOL_ID + " INTEGER, "
+            + "FOREIGN KEY(" + COLUMN_CLASSES_TEACHER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE, "
+            + "FOREIGN KEY(" + COLUMN_CLASSES_SCHOOL_ID + ") REFERENCES " + TABLE_SCHOOLS + "(" + COLUMN_SCHOOL_ID + ") ON DELETE CASCADE"
+            + ");";
+
+    // SQL statement to create Classes table
+//    private static final String CREATE_TABLE_CLASSES = "CREATE TABLE " + TABLE_CLASSES + " ("
+//            + COLUMN_CLASSES_CLASS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+//            + COLUMN_CLASSES_CLASS_NAME + " TEXT NOT NULL, "
+//            + COLUMN_CLASSES_SUBJECT + " TEXT NOT NULL, "
+//            + COLUMN_CLASSES_TEACHER_ID + " INTEGER, "
+//            + COLUMN_CLASSES_SCHOOL_ID + " INTEGER, "
+//            + "FOREIGN KEY(" + COLUMN_CLASSES_TEACHER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE, "
+//            + "FOREIGN KEY(" + COLUMN_CLASSES_SCHOOL_ID + ") REFERENCES " + TABLE_SCHOOLS + "(" + COLUMN_SCHOOL_ID + ") ON DELETE CASCADE"
+//            + ");";
+
+
+
+
     public DatabaseConnection(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -92,6 +169,9 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_USERS);
         db.execSQL(CREATE_TABLE_SCHOOLS);
+        db.execSQL(CREATE_TABLE_TEACHERS);
+        db.execSQL(CREATE_TABLE_CLASSES);
+        db.execSQL(CREATE_TABLE_STUDENTS);
         Log.d("DatabaseConnection", "Users table created");
         db.execSQL(INSERT_SYSTEM_ADMIN);
         Log.d("DatabaseConnection", "SystemAdmin seeded into Users table");
@@ -100,7 +180,17 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS Users");
+        // Drop old tables if they exist
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SCHOOLS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEACHERS); // Include the new table
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLASSES);
+
+
+        // Recreate tables
+//        onCreate(db);
+//        db.execSQL("DROP TABLE IF EXISTS Users");
         onCreate(db);
     }
 
@@ -125,7 +215,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     }
 
     // Method to add a new SchoolAdmin user
-    public long addSchoolAdmin(String name, String email, String password) {
+    public long addSchoolAdmin(String name, String email, String password, int schoolID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
@@ -133,6 +223,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         values.put(COLUMN_PASSWORD, password);
         values.put(COLUMN_ROLE, "SchoolAdmin");
         values.put(COLUMN_PROFILE_PICTURE, (String) null);
+        values.put(COLUMN_USER_SCHOOL_ID, schoolID);
 
         return db.insert(TABLE_USERS, null, values);
     }
@@ -166,17 +257,85 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         return db.insert(TABLE_SCHOOLS, null, values);
     }
 
-    // Method to add a Teacher
-    public long addTeacher(String name, String email, String password, long schoolId) {
+    // Add Teacher
+    public long addTeacher(String name, String email, String password, String specialization, String hireDate, long schoolId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, name);
-        values.put(COLUMN_EMAIL, email);
-        values.put(COLUMN_PASSWORD, password); // Consider hashing for production
-        values.put(COLUMN_ROLE, "Teacher");
-        values.put(COLUMN_USER_SCHOOL_ID, schoolId);  // Use COLUMN_USER_SCHOOL_ID here
-        return db.insert(TABLE_USERS, null, values);
+        long teacherUserId = -1;
+
+        // Step 1: Insert basic user information in Users table
+        ContentValues userValues = new ContentValues();
+        userValues.put(COLUMN_NAME, name);
+        userValues.put(COLUMN_EMAIL, email);
+        userValues.put(COLUMN_PASSWORD, password); // Secure password
+        userValues.put(COLUMN_ROLE, "Teacher");
+        userValues.put(COLUMN_USER_SCHOOL_ID, schoolId);
+
+        // Insert user into Users table and get generated UserID
+        try {
+            teacherUserId = db.insert(TABLE_USERS, null, userValues);
+            if (teacherUserId == -1) {
+                return -1; // Failed to insert user
+            }
+
+            // Step 2: Insert teacher-specific details in Teachers table
+            ContentValues teacherValues = new ContentValues();
+            teacherValues.put(COLUMN_TEACHER_USER_ID, teacherUserId);
+            teacherValues.put(COLUMN_SPECIALIZATION, specialization);
+            teacherValues.put(COLUMN_HIRE_DATE, hireDate);
+
+            long teacherResult = db.insert(TABLE_TEACHERS, null, teacherValues);
+            if (teacherResult == -1) {
+                db.delete(TABLE_USERS, COLUMN_USER_ID + "=?", new String[]{String.valueOf(teacherUserId)});
+                return -1; // Failed to insert teacher-specific info, rollback
+            }
+            return teacherUserId; // Successfully inserted teacher
+        } finally {
+            db.close();
+        }
     }
+
+    // Add Student
+    public long addStudent(String name, String email, String password, String gradeLevel, String enrolledProgram, long classId, long schoolId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long studentUserId = -1;
+
+        // Step 1: Insert basic user information in Users table
+        ContentValues userValues = new ContentValues();
+        userValues.put(COLUMN_NAME, name);
+        userValues.put(COLUMN_EMAIL, email);
+        userValues.put(COLUMN_PASSWORD, password); // Secure password
+        userValues.put(COLUMN_ROLE, "Student");
+        userValues.put(COLUMN_USER_SCHOOL_ID, schoolId);
+
+        // Insert user into Users table and get generated UserID
+        try {
+            studentUserId = db.insert(TABLE_USERS, null, userValues);
+            if (studentUserId == -1) {
+                return -1; // Failed to insert user
+            }
+
+            // Step 2: Insert student-specific details in Students table
+            ContentValues studentValues = new ContentValues();
+            studentValues.put(COLUMN_STUDENT_USER_ID, studentUserId);
+            studentValues.put(COLUMN_GRADE_LEVEL, gradeLevel);
+            studentValues.put(COLUMN_ENROLLED_PROGRAM, enrolledProgram);
+            studentValues.put(COLUMN_CLASS_ID, classId);
+
+            long studentResult = db.insert(TABLE_STUDENTS, null, studentValues);
+            if (studentResult == -1) {
+                // Rollback: delete user entry if student-specific info fails
+                db.delete(TABLE_USERS, COLUMN_USER_ID + "=?", new String[]{String.valueOf(studentUserId)});
+                return -1;
+            }
+
+            return studentUserId; // Successfully inserted student
+        } finally {
+            db.close();
+        }
+    }
+
+
+
 
     // Method to retrieve schoolId based on the SchoolAdminID
     public long getSchoolIdByAdminId(long schoolAdminId) {
@@ -195,6 +354,92 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
 
 
+
+    // DatabaseConnection.java
+
+    // Gets the list of teacher names
+
+    public List<String> getTeacherNames() {
+        List<String> teacherNames = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USERS,
+                new String[]{COLUMN_NAME},
+                COLUMN_ROLE + " = ?", new String[]{"Teacher"},
+                null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                teacherNames.add(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return teacherNames;
+    }
+
+    // Gets the list of teacher IDs
+    public List<Long> getTeacherIds() {
+        List<Long> teacherIds = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USERS,
+                new String[]{COLUMN_USER_ID},
+                COLUMN_ROLE + " = ?", new String[]{"Teacher"},
+                null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                teacherIds.add(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return teacherIds;
+    }
+
+    // Gets the list of school names
+    public List<String> getSchoolNames() {
+        List<String> schoolNames = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_SCHOOLS,
+                new String[]{COLUMN_SCHOOL_NAME},  // Assuming COLUMN_NAME holds school names
+                null, null, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                schoolNames.add(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SCHOOL_NAME)));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return schoolNames;
+    }
+
+
+    // Gets the list of school IDs
+    public List<Long> getSchoolIds() {
+        List<Long> schoolIds = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_SCHOOLS,
+                new String[]{COLUMN_SCHOOL_ID},
+                null, null, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                schoolIds.add(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SCHOOL_ID)));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return schoolIds;
+    }
+
+    // Adds a class with given details
+    public long addClass(String className, String subject, long teacherId, long schoolId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CLASSES_CLASS_NAME, className);
+        values.put(COLUMN_CLASSES_SUBJECT, subject);
+        values.put(COLUMN_TEACHER_ID, teacherId);
+        values.put(COLUMN_CLASSES_SCHOOL_ID, schoolId);
+
+        return db.insert(TABLE_CLASSES, null, values);
+    }
 
 
 

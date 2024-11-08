@@ -29,4 +29,5 @@
     <string name="signInAccount">Sign In</string>
     <string name="login_email">Email</string>
     <string name="loginPassword">Password</string>
+    <string name="teacherName">Name</string>
 </resources>

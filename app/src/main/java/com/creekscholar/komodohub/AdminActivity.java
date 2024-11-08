@@ -45,18 +45,12 @@ public class AdminActivity extends AppCompatActivity {
             String subscriptionStatus = schoolSubscriptionStatus.getText().toString().trim();
 
             // Add the SchoolAdmin user
-            long schoolAdminId = databaseConnection.addSchoolAdmin(adminName, adminEmail, adminPassword);
+            long schoolAdminId = databaseConnection.addSchoolAdmin(adminName, adminEmail, adminPassword, 1);
             if (schoolAdminId != -1) {
                 // Add the school with the new SchoolAdmin ID
                 long schoolId = databaseConnection.addSchool(schoolName, schoolAddress, subscriptionStatus, "Sample Payment Details", schoolAdminId);
                 if (schoolId != -1) {
                     Toast.makeText(this, "School and Admin added successfully!", Toast.LENGTH_LONG).show();
-                    // Start AddTeacherActivity, passing SchoolAdminID
-//                    Intent intent = new Intent(AdminActivity.this, AddTeacherActivity.class);
-//                    intent.putExtra("SchoolAdminID", schoolAdminId);
-//                    startActivity(intent);
-//                    finish();
-                    // Intent to navigate back to MainActivity
                     Intent intent = new Intent(AdminActivity.this, MainActivity.class);
                     intent.putExtra("SchoolAdminID", schoolAdminId);
                     startActivity(intent);
@@ -68,38 +62,6 @@ public class AdminActivity extends AppCompatActivity {
                 Toast.makeText(this, "Failed to add SchoolAdmin!", Toast.LENGTH_LONG).show();
             }
         });
-
-
-//        addSchoolButton.setOnClickListener(v -> {
-//            String adminName = adminNameInput.getText().toString().trim();
-//            String adminEmail = adminEmailInput.getText().toString().trim();
-//            String adminPassword = adminPasswordInput.getText().toString().trim();
-//            String schoolName = schoolNameInput.getText().toString().trim();
-//            String schoolAddress = schoolAddressInput.getText().toString().trim();
-//            String subscriptionStatus = schoolSubscriptionStatus.getText().toString().trim();
-//
-//
-//            // Assuming you have the SchoolAdminID retrieved in AdminActivity
-//            long schoolAdminId = /* your method to retrieve SchoolAdmin ID */;
-//            Intent intent = new Intent(AdminActivity.this, AddTeacherActivity.class);
-//            intent.putExtra("SchoolAdminID", schoolAdminId); // Pass SchoolAdmin ID to the next activity
-//            startActivity(intent);
-//
-//
-//            // Add the SchoolAdmin user and the school
-//            long schoolAdminId = databaseConnection.addSchoolAdmin(adminName, adminEmail, adminPassword);
-//            if (schoolAdminId != -1) {
-//                long schoolId = databaseConnection.addSchool(schoolName, schoolAddress, subscriptionStatus, "Sample Payment Details", schoolAdminId);
-//                if (schoolId != -1) {
-//                    Toast.makeText(this, "School and Admin added successfully!", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Toast.makeText(this, "Failed to add school!", Toast.LENGTH_LONG).show();
-//                }
-//            } else {
-//                Toast.makeText(this, "Failed to add SchoolAdmin!", Toast.LENGTH_LONG).show();
-//            }
-//        });
-
 
 
 

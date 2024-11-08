@@ -89,6 +89,13 @@
             android:onClick="onViewStudentButtonClick"/>
 
         <Button
+            android:id="@+id/allocateTeacherButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Allocate Teacher"
+            android:onClick="onAllocateTeacherButtonClick"/>
+
+        <Button
             android:id="@+id/exitSchoolAdminButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
