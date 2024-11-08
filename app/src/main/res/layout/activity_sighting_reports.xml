@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Input for Species Name -->
+
+    <!-- Input for Description -->
+
+    <EditText
+        android:id="@+id/speciesNameInput"
+        android:layout_width="363dp"
+        android:layout_height="68dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Species Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/descriptionInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/speciesNameInput"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Description"
+        android:inputType="textMultiLine"
+        android:minLines="3" />
+
+    <!-- Button to select photo -->
+    <Button
+        android:id="@+id/addPhotoButton"
+        android:layout_width="164dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionInput"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="215dp"
+        android:text="Add Photo" />
+
+    <!-- ImageView to display selected photo -->
+    <ImageView
+        android:id="@+id/selectedPhotoView"
+        android:layout_width="363dp"
+        android:layout_height="167dp"
+        android:layout_below="@id/addPhotoButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Selected Photo"
+        android:scaleType="centerCrop" />
+
+    <!-- Input for Location -->
+    <EditText
+        android:id="@+id/locationInput"
+        android:layout_width="376dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/selectedPhotoView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Location"
+        android:inputType="text" />
+
+    <!-- Input for Reported Date -->
+    <EditText
+        android:id="@+id/reportedDateInput"
+        android:layout_width="362dp"
+        android:layout_height="58dp"
+        android:layout_below="@id/locationInput"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Reported Date (YYYY-MM-DD)"
+        android:inputType="date" />
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reportedDateInput"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:text="Submit Report" />
+
+</RelativeLayout>

@@ -73,6 +73,42 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     public static final String COLUMN_CLASSES_TEACHER_ID = "TeacherID"; // Foreign key referencing Users (Teacher)
     public static final String COLUMN_CLASSES_SCHOOL_ID = "ClassSchoolID";   // Foreign key referencing Schools// Foreign key referencing Schools
 
+    // Constants for SightingReports table
+    public static final String TABLE_SIGHTING_REPORTS = "SightingReports";
+    public static final String COLUMN_SIGHTING_ID = "SightingID";
+    public static final String COLUMN_SPECIES_NAME = "SpeciesName";
+    public static final String COLUMN_DESCRIPTION = "Description";
+    public static final String COLUMN_PHOTO = "Photo";
+    public static final String COLUMN_LOCATION = "Location";
+    public static final String COLUMN_REPORTED_DATE = "ReportedDate";
+    public static final String COLUMN_STATUS = "Status";
+    public static final String COLUMN_SIGHTING_STUDENT_ID = "StudentID";
+
+    // Table: Content
+    public static final String TABLE_CONTENT = "Content";
+    public static final String COLUMN_CONTENT_ID = "ContentID";
+    public static final String COLUMN_TITLE = "Title";
+    public static final String COLUMN_CONTENT_DESCRIPTION = "Description";
+    public static final String COLUMN_TYPE = "Type";
+    public static final String COLUMN_FILE_PATH = "FilePath";
+    public static final String COLUMN_PUBLISH_DATE = "PublishDate";
+    public static final String COLUMN_CONTENT_CLASS_ID = "ClassID";
+    public static final String COLUMN_CONTENT_TEACHER_ID = "TeacherID";
+
+    // SQL statement to create the Content table
+    private static final String CREATE_TABLE_CONTENT = "CREATE TABLE " + TABLE_CONTENT + " ("
+            + COLUMN_CONTENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_TITLE + " TEXT NOT NULL, "
+            + COLUMN_DESCRIPTION + " TEXT, "
+            + COLUMN_TYPE + " TEXT CHECK (" + COLUMN_TYPE + " IN ('Video', 'Article', 'Document')) NOT NULL, "
+            + COLUMN_FILE_PATH + " TEXT, "
+            + COLUMN_PUBLISH_DATE + " TEXT NOT NULL, "
+            + COLUMN_CONTENT_CLASS_ID + " INTEGER, "
+            + COLUMN_CONTENT_TEACHER_ID + " INTEGER, "
+            + "FOREIGN KEY (" + COLUMN_CLASS_ID + ") REFERENCES Classes(ClassID) ON DELETE CASCADE, "
+            + "FOREIGN KEY (" + COLUMN_TEACHER_ID + ") REFERENCES Users(UserID) ON DELETE CASCADE"
+            + ");";
+
 
 
     // SQL statement for creating Users table with school ID reference
@@ -86,8 +122,6 @@ public class DatabaseConnection extends SQLiteOpenHelper {
             + COLUMN_USER_SCHOOL_ID + " INTEGER, "  // Updated reference name
             + "FOREIGN KEY(" + COLUMN_USER_SCHOOL_ID + ") REFERENCES " + TABLE_SCHOOLS + "(" + COLUMN_SCHOOL_ID + ") ON DELETE CASCADE"
             + ");";
-
-
 
 
 
@@ -147,6 +181,21 @@ public class DatabaseConnection extends SQLiteOpenHelper {
             + "FOREIGN KEY(" + COLUMN_CLASSES_SCHOOL_ID + ") REFERENCES " + TABLE_SCHOOLS + "(" + COLUMN_SCHOOL_ID + ") ON DELETE CASCADE"
             + ");";
 
+
+
+    private static final String CREATE_TABLE_SIGHTING_REPORTS = "CREATE TABLE " + TABLE_SIGHTING_REPORTS + " ("
+            + COLUMN_SIGHTING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_SPECIES_NAME + " TEXT NOT NULL, "
+            + COLUMN_DESCRIPTION + " TEXT, "
+            + COLUMN_PHOTO + " TEXT, "
+            + COLUMN_LOCATION + " TEXT, "
+            + COLUMN_REPORTED_DATE + " TEXT NOT NULL, "
+            + COLUMN_STATUS + " TEXT CHECK (" + COLUMN_STATUS + " IN ('Pending', 'Approved', 'Rejected')) DEFAULT 'Pending', "
+            + COLUMN_SIGHTING_STUDENT_ID + " INTEGER, "
+            + "FOREIGN KEY(" + COLUMN_SIGHTING_STUDENT_ID + ") REFERENCES " + TABLE_STUDENTS + "(" + COLUMN_STUDENT_ID + ") ON DELETE CASCADE"
+            + ");";
+
+
     // SQL statement to create Classes table
 //    private static final String CREATE_TABLE_CLASSES = "CREATE TABLE " + TABLE_CLASSES + " ("
 //            + COLUMN_CLASSES_CLASS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -172,6 +221,8 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TEACHERS);
         db.execSQL(CREATE_TABLE_CLASSES);
         db.execSQL(CREATE_TABLE_STUDENTS);
+        db.execSQL(CREATE_TABLE_SIGHTING_REPORTS);   // New SightingReports table
+        db.execSQL(CREATE_TABLE_CONTENT);  // Create the Content table
         Log.d("DatabaseConnection", "Users table created");
         db.execSQL(INSERT_SYSTEM_ADMIN);
         Log.d("DatabaseConnection", "SystemAdmin seeded into Users table");
@@ -186,6 +237,8 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEACHERS); // Include the new table
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLASSES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SIGHTING_REPORTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTENT);
 
 
         // Recreate tables
@@ -439,6 +492,101 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
         return db.insert(TABLE_CLASSES, null, values);
     }
+
+    public long addSightingReport(String speciesName, String description, String photo, String location, String reportedDate, String status, long studentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_SPECIES_NAME, speciesName);
+        values.put(COLUMN_DESCRIPTION, description);
+        values.put(COLUMN_PHOTO, photo);
+        values.put(COLUMN_LOCATION, location);
+        values.put(COLUMN_REPORTED_DATE, reportedDate);
+        values.put(COLUMN_STATUS, status);
+        values.put(COLUMN_SIGHTING_STUDENT_ID, studentId);
+
+        long result = db.insert(TABLE_SIGHTING_REPORTS, null, values);
+        db.close();
+        return result;
+    }
+
+    // Adds new content to the Content table
+    public long addContent(String title, String description, String type, String filePath, String publishDate, long classId, long teacherId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_TITLE, title);
+        values.put(COLUMN_DESCRIPTION, description);
+        values.put(COLUMN_TYPE, type);
+        values.put(COLUMN_FILE_PATH, filePath);
+        values.put(COLUMN_PUBLISH_DATE, publishDate);
+        values.put(COLUMN_CLASS_ID, classId);
+        values.put(COLUMN_TEACHER_ID, teacherId);
+
+        return db.insert(TABLE_CONTENT, null, values);
+    }
+
+
+    // Retrieves content based on the class ID
+//    public List<Content> getContentByClassId(long classId) {
+//        List<Content> contentList = new ArrayList<>();
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        Cursor cursor = db.query(TABLE_CONTENT, null, COLUMN_CLASS_ID + " = ?",
+//                new String[]{String.valueOf(classId)}, null, null, COLUMN_PUBLISH_DATE + " DESC");
+//
+//        if (cursor != null && cursor.moveToFirst()) {
+//            do {
+//                Content content = new Content();
+//                content.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CONTENT_ID)));
+//                content.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE)));
+//                content.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION)));
+//                content.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TYPE)));
+//                content.setFilePath(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FILE_PATH)));
+//                content.setPublishDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PUBLISH_DATE)));
+//                content.setClassId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CLASS_ID)));
+//                content.setTeacherId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_TEACHER_ID)));
+//
+//                contentList.add(content);
+//            } while (cursor.moveToNext());
+//
+//            cursor.close();
+//        }
+//
+//        return contentList;
+//    }
+
+    // Retrieves content created by a specific teacher
+//    public List<Content> getContentByTeacherId(long teacherId) {
+//        List<Content> contentList = new ArrayList<>();
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        Cursor cursor = db.query(TABLE_CONTENT, null, COLUMN_TEACHER_ID + " = ?",
+//                new String[]{String.valueOf(teacherId)}, null, null, COLUMN_PUBLISH_DATE + " DESC");
+//
+//        if (cursor != null && cursor.moveToFirst()) {
+//            do {
+//                Content content = new Content();
+//                content.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CONTENT_ID)));
+//                content.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE)));
+//                content.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION)));
+//                content.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TYPE)));
+//                content.setFilePath(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FILE_PATH)));
+//                content.setPublishDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PUBLISH_DATE)));
+//                content.setClassId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CLASS_ID)));
+//                content.setTeacherId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_TEACHER_ID)));
+//
+//                contentList.add(content);
+//            } while (cursor.moveToNext());
+//
+//            cursor.close();
+//        }
+//
+//        return contentList;
+//    }
+
+
+
+
 
 
 

@@ -121,6 +121,13 @@
             android:onClick="onTeacherButtonClick"/>
 
         <Button
+            android:id="@+id/addContentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Learning Content"
+            android:onClick="onTeacherButtonClick"/>
+
+        <Button
             android:id="@+id/manageContentButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -149,7 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Report Sightings"
-            android:onClick="onStudentButtonClick"/>
+            android:onClick="onStudentSightingReportButtonClick"/>
     </LinearLayout>
 
     <!-- Layout for Visitors -->

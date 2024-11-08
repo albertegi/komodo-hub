@@ -1,0 +1,57 @@
+<!-- activity_add_content.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/titleInput"
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:hint="Content Title"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/descriptionInput"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:hint="Description"
+        android:inputType="textMultiLine" />
+
+<!--    <Spinner-->
+<!--        android:id="@+id/typeSpinner"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:spinnerMode="dropdown" />-->
+
+    <Spinner
+        android:id="@+id/contentTypeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:entries="@array/content_type_array" />
+
+
+
+    <Button
+        android:id="@+id/uploadFileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Upload File" />
+
+    <ImageView
+        android:id="@+id/fileImageView"
+        android:layout_width="120dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_file_placeholder" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Submit Content" />
+</LinearLayout>

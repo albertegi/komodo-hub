@@ -30,4 +30,12 @@
     <string name="login_email">Email</string>
     <string name="loginPassword">Password</string>
     <string name="teacherName">Name</string>
+
+    !-- Array for content types -->
+    <string-array name="content_type_array">
+        <item>Video</item>
+        <item>Article</item>
+        <item>Document</item>
+    </string-array>
+
 </resources>

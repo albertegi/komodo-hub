@@ -143,6 +143,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, AddClassActivity.class);
         //intent.putExtra("SchoolAdminID",schoolAdminId);
         startActivity(intent);
+    }
+
+    public void onStudentSightingReportButtonClick(View view){
+        // for Adding of Sighting Reports
+        Intent intent = new Intent(MainActivity.this, SightingReportsActivity.class);
+        //intent.putExtra("SchoolAdminID",schoolAdminId);
+        startActivity(intent);
+    }
+
+    public void onTeacherButtonClick(View view){
+        // for Adding of Learning Contents
+        Intent intent = new Intent(MainActivity.this, AddContentActivity.class);
+        startActivity(intent);
 
     }
 
