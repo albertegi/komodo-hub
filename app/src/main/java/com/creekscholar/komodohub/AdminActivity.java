@@ -45,7 +45,7 @@ public class AdminActivity extends AppCompatActivity {
             String subscriptionStatus = schoolSubscriptionStatus.getText().toString().trim();
 
             // Add the SchoolAdmin user
-            long schoolAdminId = databaseConnection.addSchoolAdmin(adminName, adminEmail, adminPassword, 1);
+            long schoolAdminId = databaseConnection.addSchoolAdmin(adminName, adminEmail, adminPassword);
             if (schoolAdminId != -1) {
                 // Add the school with the new SchoolAdmin ID
                 long schoolId = databaseConnection.addSchool(schoolName, schoolAddress, subscriptionStatus, "Sample Payment Details", schoolAdminId);

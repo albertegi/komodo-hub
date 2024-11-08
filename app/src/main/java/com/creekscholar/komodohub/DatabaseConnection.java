@@ -215,7 +215,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     }
 
     // Method to add a new SchoolAdmin user
-    public long addSchoolAdmin(String name, String email, String password, int schoolID) {
+    public long addSchoolAdmin(String name, String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
@@ -223,7 +223,6 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         values.put(COLUMN_PASSWORD, password);
         values.put(COLUMN_ROLE, "SchoolAdmin");
         values.put(COLUMN_PROFILE_PICTURE, (String) null);
-        values.put(COLUMN_USER_SCHOOL_ID, schoolID);
 
         return db.insert(TABLE_USERS, null, values);
     }
