@@ -1,5 +1,6 @@
 package com.creekscholar.komodohub;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -47,21 +48,32 @@ public class AddContentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_content);
 
 
-        // Initialize Database Connection
-        databaseConnection = new DatabaseConnection(this);
-
         // Initialize views
         titleInput = findViewById(R.id.titleInput);
         descriptionInput = findViewById(R.id.descriptionInput);
         //typeSpinner = findViewById(R.id.typeSpinner);
-
         contentTypeSpinner = findViewById(R.id.contentTypeSpinner);
-        String selectedType = contentTypeSpinner.getSelectedItem().toString();
-
-
+        //String selectedType = contentTypeSpinner.getSelectedItem().toString();
         fileImageView = findViewById(R.id.fileImageView);
         uploadFileButton = findViewById(R.id.uploadFileButton);
         submitButton = findViewById(R.id.submitButton);
+
+        // Initialize Database Connection
+        databaseConnection = new DatabaseConnection(this);
+
+        contentTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedType = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedType = null;
+            }
+        });
+
+
 
         // Set up spinner for content type
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -70,27 +82,21 @@ public class AddContentActivity extends AppCompatActivity {
         contentTypeSpinner.setAdapter(adapter);
 
 
-//        contentTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                selectedType = parent.getItemAtPosition(position).toString();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {}
-//        });
-
-
-
-
-
 
         // Listener for uploading a file
         uploadFileButton.setOnClickListener(v -> selectFile());
 
         // Listener for submitting content
         submitButton.setOnClickListener(v -> submitContent());
+
+//        SharedPreferences preferences = getSharedPreferences("UserDetails", MODE_PRIVATE);
+//        int classID = preferences.getInt("ClassID", -1);
+//        int teacherID = preferences.getInt("TeacherID", -1);
+
+// Proceed similarly with submitContent method
+
     }
+
 
     private void selectFile() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -113,10 +119,12 @@ public class AddContentActivity extends AppCompatActivity {
         String title = titleInput.getText().toString().trim();
         String description = descriptionInput.getText().toString().trim();
 
-        if (title.isEmpty() || selectedType == null) {
-            Toast.makeText(this, "Title and type are required", Toast.LENGTH_SHORT).show();
+
+        if (title.isEmpty() || selectedType == null || filePath.isEmpty()) {
+            Toast.makeText(this, "Title, type, and file are required", Toast.LENGTH_SHORT).show();
             return;
         }
+
 
         String publishDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 

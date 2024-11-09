@@ -195,6 +195,36 @@ public class DatabaseConnection extends SQLiteOpenHelper {
             + "FOREIGN KEY(" + COLUMN_SIGHTING_STUDENT_ID + ") REFERENCES " + TABLE_STUDENTS + "(" + COLUMN_STUDENT_ID + ") ON DELETE CASCADE"
             + ");";
 
+    // Table name for ProgressReports
+    public static final String TABLE_PROGRESS_REPORTS = "ProgressReports";
+
+    // Column names for ProgressReports table
+    public static final String COLUMN_REPORT_ID = "ReportID";
+    public static final String COLUMN_GRADE = "Grade";
+    public static final String COLUMN_FEEDBACK = "Feedback";
+    public static final String COLUMN_SUBMISSION_DATE = "SubmissionDate";
+    public static final String COLUMN_PROGRESS_REPORT_STUDENT_ID = "StudentID";
+    public static final String COLUMN_PROGRESS_REPORT_TEACHER_ID = "TeacherID";
+    public static final String COLUMN_PROGRESS_REPORT_CLASS_ID = "ClassID";
+
+    private static final String CREATE_TABLE_PROGRESS_REPORTS = "CREATE TABLE " + TABLE_PROGRESS_REPORTS + " ("
+            + COLUMN_REPORT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_GRADE + " TEXT, "
+            + COLUMN_FEEDBACK + " TEXT, "
+            + COLUMN_SUBMISSION_DATE + " TEXT NOT NULL, "
+            + COLUMN_STUDENT_ID + " INTEGER, "
+            + COLUMN_TEACHER_ID + " INTEGER, "
+            + COLUMN_CLASS_ID + " INTEGER, "
+            + "FOREIGN KEY (" + COLUMN_PROGRESS_REPORT_STUDENT_ID + ") REFERENCES Students(StudentID) ON DELETE CASCADE, "
+            + "FOREIGN KEY (" + COLUMN_PROGRESS_REPORT_TEACHER_ID + ") REFERENCES Users(UserID) ON DELETE CASCADE, "
+            + "FOREIGN KEY (" + COLUMN_PROGRESS_REPORT_CLASS_ID + ") REFERENCES Classes(ClassID) ON DELETE CASCADE"
+            + ");";
+
+
+
+
+
+
 
     // SQL statement to create Classes table
 //    private static final String CREATE_TABLE_CLASSES = "CREATE TABLE " + TABLE_CLASSES + " ("
@@ -223,6 +253,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_STUDENTS);
         db.execSQL(CREATE_TABLE_SIGHTING_REPORTS);   // New SightingReports table
         db.execSQL(CREATE_TABLE_CONTENT);  // Create the Content table
+        db.execSQL(CREATE_TABLE_PROGRESS_REPORTS);
         Log.d("DatabaseConnection", "Users table created");
         db.execSQL(INSERT_SYSTEM_ADMIN);
         Log.d("DatabaseConnection", "SystemAdmin seeded into Users table");
@@ -239,6 +270,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLASSES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SIGHTING_REPORTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTENT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROGRESS_REPORTS);
 
 
         // Recreate tables
@@ -519,11 +551,43 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         values.put(COLUMN_TYPE, type);
         values.put(COLUMN_FILE_PATH, filePath);
         values.put(COLUMN_PUBLISH_DATE, publishDate);
-        values.put(COLUMN_CLASS_ID, classId);
-        values.put(COLUMN_TEACHER_ID, teacherId);
+        values.put(COLUMN_CONTENT_CLASS_ID, classId);
+        values.put(COLUMN_CONTENT_TEACHER_ID, teacherId);
 
         return db.insert(TABLE_CONTENT, null, values);
     }
+
+
+    public long addProgressReport(String grade, String feedback, String submissionDate, int studentID, int teacherID, int classID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("Grade", grade);
+        values.put("Feedback", feedback);
+        values.put("SubmissionDate", submissionDate);
+        values.put("StudentID", studentID);
+        values.put("TeacherID", teacherID);
+        values.put("ClassID", classID);
+
+        return db.insert("ProgressReports", null, values); // Insert into ProgressReports table
+    }
+
+
+
+//    public long addContent(String title, String description, String type, String filePath, String publishDate, int classID, int teacherID) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put("Title", title);
+//        values.put("Description", description);
+//        values.put("Type", type);
+//        values.put("FilePath", filePath);
+//        values.put("PublishDate", publishDate);
+//        values.put("ClassID", classID);
+//        values.put("TeacherID", teacherID);
+//
+//        return db.insert("Content", null, values);
+//    }
+
 
 
     // Retrieves content based on the class ID

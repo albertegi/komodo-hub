@@ -125,7 +125,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add Learning Content"
-            android:onClick="onTeacherButtonClick"/>
+            android:onClick="onTeacherAddContentButtonClick"/>
+
+        <Button
+            android:id="@+id/addProgressReportButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Progress Report"
+            android:onClick="onTeacherAddProgressReportButtonClick"/>
 
         <Button
             android:id="@+id/manageContentButton"

@@ -152,11 +152,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onTeacherButtonClick(View view){
+    public void onTeacherAddContentButtonClick(View view){
         // for Adding of Learning Contents
         Intent intent = new Intent(MainActivity.this, AddContentActivity.class);
         startActivity(intent);
 
+    }
+
+    public void onTeacherAddProgressReportButtonClick(View view){
+        // for Adding of Learning Contents
+        Intent intent = new Intent(MainActivity.this, AddProgressReportActivity.class);
+        startActivity(intent);
     }
 
 
