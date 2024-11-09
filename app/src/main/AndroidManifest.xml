@@ -13,6 +13,12 @@
         android:theme="@style/Theme.KomodoHub"
         tools:targetApi="31">
         <activity
+            android:name=".AddVisitorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VisitorDashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddProgressReportActivity"
             android:exported="false" />
         <activity

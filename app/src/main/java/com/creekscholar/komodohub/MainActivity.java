@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout visitorLayout;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Set a welcome message based on the role
         welcomeTextView.setText("Welcome to Komodo Hub! " + email + " You are logged in as: " + userRole);
-
 
 
         // Hide all role-based layouts by default
@@ -163,6 +161,12 @@ public class MainActivity extends AppCompatActivity {
         // for Adding of Learning Contents
         Intent intent = new Intent(MainActivity.this, AddProgressReportActivity.class);
         startActivity(intent);
+    }
+
+    public void onAddVisitorButtonClick(View view){
+        Intent intent = new Intent(MainActivity.this, AddVisitorActivity.class);
+        startActivity(intent);
+
     }
 
 

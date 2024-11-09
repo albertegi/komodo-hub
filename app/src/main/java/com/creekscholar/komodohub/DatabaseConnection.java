@@ -17,8 +17,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import androidx.annotation.Nullable;
 
@@ -117,7 +120,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
             + COLUMN_NAME + " TEXT NOT NULL, "
             + COLUMN_EMAIL + " TEXT NOT NULL UNIQUE, "
             + COLUMN_PASSWORD + " TEXT NOT NULL, "
-            + COLUMN_ROLE + " TEXT NOT NULL CHECK (Role IN ('SystemAdmin', 'SchoolAdmin', 'Teacher', 'Student')), "
+            + COLUMN_ROLE + " TEXT NOT NULL CHECK (Role IN ('SystemAdmin', 'SchoolAdmin', 'Teacher', 'Student','Visitor')), "
             + COLUMN_PROFILE_PICTURE + " TEXT, "
             + COLUMN_USER_SCHOOL_ID + " INTEGER, "  // Updated reference name
             + "FOREIGN KEY(" + COLUMN_USER_SCHOOL_ID + ") REFERENCES " + TABLE_SCHOOLS + "(" + COLUMN_SCHOOL_ID + ") ON DELETE CASCADE"
@@ -221,6 +224,29 @@ public class DatabaseConnection extends SQLiteOpenHelper {
             + ");";
 
 
+    // Table name for Visitors
+    public static final String TABLE_VISITORS = "Visitors";
+
+    // Column names for Visitors table
+    public static final String COLUMN_VISITOR_ID = "VisitorID";
+    public static final String COLUMN_VISITOR_USER_ID = "UserID"; // Foreign key linking to Users table
+    public static final String COLUMN_VISIT_PURPOSE = "VisitPurpose"; // Purpose of the visit
+    public static final String COLUMN_VISIT_DATE = "VisitDate"; // Date of the visit
+
+
+    private static final String CREATE_TABLE_VISITORS = "CREATE TABLE " + TABLE_VISITORS + " ("
+            + COLUMN_VISITOR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_VISITOR_USER_ID + " INTEGER NOT NULL, "
+            + COLUMN_VISIT_PURPOSE + " TEXT, "
+            + COLUMN_VISIT_DATE + " TEXT, "
+            + "FOREIGN KEY(" + COLUMN_VISITOR_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE"
+            + ");";
+
+
+
+
+
+
 
 
 
@@ -254,6 +280,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_SIGHTING_REPORTS);   // New SightingReports table
         db.execSQL(CREATE_TABLE_CONTENT);  // Create the Content table
         db.execSQL(CREATE_TABLE_PROGRESS_REPORTS);
+        db.execSQL(CREATE_TABLE_VISITORS);
         Log.d("DatabaseConnection", "Users table created");
         db.execSQL(INSERT_SYSTEM_ADMIN);
         Log.d("DatabaseConnection", "SystemAdmin seeded into Users table");
@@ -271,6 +298,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SIGHTING_REPORTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROGRESS_REPORTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_VISITORS);
 
 
         // Recreate tables
@@ -571,6 +599,104 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
         return db.insert("ProgressReports", null, values); // Insert into ProgressReports table
     }
+
+//    public long addVisitor(String name, String email) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(COLUMN_VISITOR_NAME, name);
+//        values.put(COLUMN_VISITOR_EMAIL, email);
+//
+//        // Insert the new visitor into the Visitors table
+//        return db.insert(TABLE_VISITORS, null, values);
+//    }
+
+    public long addVisitor(String name, String email, String password, String visitPurpose) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Step 1: Insert visitor into Users table with the role 'Visitor'
+        ContentValues userValues = new ContentValues();
+        userValues.put(COLUMN_NAME, name);
+        userValues.put(COLUMN_EMAIL, email);
+        userValues.put(COLUMN_PASSWORD, password);
+        userValues.put(COLUMN_ROLE, "Visitor");
+        //userValues.put(COLUMN_USER_ID, userId);
+
+        // Insert into Users table and get the UserID
+         long userId = db.insert(TABLE_USERS, null, userValues);
+
+        // If there was an error inserting into Users, return -1
+        if (userId == -1) {
+            return -1;
+        }
+
+        // Insert into Visitors table
+        ContentValues visitorValues = new ContentValues();
+        visitorValues.put(COLUMN_VISITOR_USER_ID, userId);
+        visitorValues.put(COLUMN_VISIT_PURPOSE, visitPurpose);
+        visitorValues.put(COLUMN_VISIT_DATE, new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+
+        return db.insert(TABLE_VISITORS, null, visitorValues); // Return the visitor entry ID
+
+//        // Step 2: Insert into Visitors table using the generated UserID
+//        ContentValues visitorValues = new ContentValues();
+//        visitorValues.put(COLUMN_VISITOR_USER_ID, userId);  // Reference to UserID in Users table
+//
+//        // Insert into Visitors table
+//        return db.insert(TABLE_VISITORS, null, visitorValues);
+    }
+
+
+    public long registerVisitor(String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Email", email);
+        values.put("Password", password);
+        values.put("Role", "Visitor");
+
+        // Insert the new visitor into Users table
+        return db.insert("Users", null, values);
+    }
+
+    public Cursor getAllVisitors() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_VISITORS, null, null, null, null, null, null);
+    }
+
+
+
+
+
+
+    public List<String> getGeneralInformation() {
+        List<String> generalInfoList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT Title, Description FROM Content WHERE Type = 'Article' OR Type = 'Video'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            // Check column indexes to avoid "value must be >=0" error
+            int titleIndex = cursor.getColumnIndex("Title");
+            int descriptionIndex = cursor.getColumnIndex("Description");
+
+            if (titleIndex == -1 || descriptionIndex == -1) {
+                // Columns do not exist, return empty list or handle error appropriately
+                cursor.close();
+                throw new IllegalStateException("Title or Description column not found in Content table.");
+            }
+
+            do {
+                String title = cursor.getString(titleIndex);
+                String description = cursor.getString(descriptionIndex);
+                generalInfoList.add(title + ": " + description);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return generalInfoList;
+    }
+
+
+
 
 
 

@@ -44,6 +44,13 @@
             android:onClick="onSendEmailsButtonClick"/>
 
         <Button
+            android:id="@+id/addVisitorButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Visitor"
+            android:onClick="onAddVisitorButtonClick"/>
+
+        <Button
             android:id="@+id/ExitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -179,8 +186,9 @@
             android:id="@+id/explorePublicContentButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Explore Public Content"
-            android:onClick="onVisitorButtonClick"/>
+            android:text="Add Visitor To Explore Public Content"
+            android:onClick="onVisitorContentButtonClick"/>
+
     </LinearLayout>
 
 </LinearLayout>
