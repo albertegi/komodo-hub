@@ -13,6 +13,15 @@
         android:theme="@style/Theme.KomodoHub"
         tools:targetApi="31">
         <activity
+            android:name=".ManageStudentsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TeacherDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageTeachersActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddVisitorActivity"
             android:exported="false" />
         <activity

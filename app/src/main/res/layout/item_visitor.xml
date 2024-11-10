@@ -1,22 +1,15 @@
-<!-- res/layout/item_visitor.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="10dp"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/visitorNameTextView"
+        android:id="@+id/infoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Visitor Name"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textColor="@android:color/black" />
 
-    <TextView
-        android:id="@+id/visitorEmailTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Visitor Email"
-        android:textSize="14sp" />
 </LinearLayout>

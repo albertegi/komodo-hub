@@ -170,4 +170,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void onVisitorContentButtonClick(View view) {
+        Intent intent = new Intent(MainActivity.this, VisitorDashboardActivity.class);
+        startActivity(intent);
+    }
+
+    public void manageTeacherButtonClick(View view){
+        Intent intent = new Intent(MainActivity.this, ManageTeachersActivity.class);
+        startActivity(intent);
+    }
+
+
 }

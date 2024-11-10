@@ -75,6 +75,13 @@
             android:onClick="onAddTeacherButtonClick"/>
 
         <Button
+            android:id="@+id/manageTeacherButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Teacher"
+            android:onClick="manageTeacherButtonClick"/>
+
+        <Button
             android:id="@+id/viewTeacherButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -186,8 +193,15 @@
             android:id="@+id/explorePublicContentButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Visitor To Explore Public Content"
+            android:text="Explore Public Content"
             android:onClick="onVisitorContentButtonClick"/>
+
+        <Button
+            android:id="@+id/exitPublicContentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exit"
+            android:onClick="onVisitorExitContentButtonClick"/>
 
     </LinearLayout>
 

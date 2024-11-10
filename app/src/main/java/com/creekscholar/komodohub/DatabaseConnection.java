@@ -600,15 +600,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         return db.insert("ProgressReports", null, values); // Insert into ProgressReports table
     }
 
-//    public long addVisitor(String name, String email) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(COLUMN_VISITOR_NAME, name);
-//        values.put(COLUMN_VISITOR_EMAIL, email);
-//
-//        // Insert the new visitor into the Visitors table
-//        return db.insert(TABLE_VISITORS, null, values);
-//    }
+
 
     public long addVisitor(String name, String email, String password, String visitPurpose) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -664,9 +656,6 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
 
 
-
-
-
     public List<String> getGeneralInformation() {
         List<String> generalInfoList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -694,6 +683,93 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         cursor.close();
         return generalInfoList;
     }
+
+    // Method to fetch all teachers
+    public List<User> getAllTeachers() {
+        List<User> teacherList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USERS,
+                null,
+                COLUMN_ROLE + "=?",
+                new String[]{"Teacher"},
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                User teacher = new User(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROLE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PROFILE_PICTURE))
+                );
+                teacherList.add(teacher);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return teacherList;
+    }
+
+    // Method to update teacher information
+    public boolean updateTeacher(int userId, String name, String email, String specialization, String hireDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues userValues = new ContentValues();
+        userValues.put(COLUMN_NAME, name);
+        userValues.put(COLUMN_EMAIL, email);
+
+        ContentValues teacherValues = new ContentValues();
+        teacherValues.put(COLUMN_SPECIALIZATION, specialization);
+        teacherValues.put(COLUMN_HIRE_DATE, hireDate);
+
+        int userRowsAffected = db.update(TABLE_USERS, userValues, COLUMN_USER_ID + "=?", new String[]{String.valueOf(userId)});
+        int teacherRowsAffected = db.update(TABLE_TEACHERS, teacherValues, COLUMN_TEACHER_USER_ID + "=?", new String[]{String.valueOf(userId)});
+
+        db.close();
+        return userRowsAffected > 0 && teacherRowsAffected > 0;
+    }
+
+    // Method to delete a teacher
+    public boolean deleteTeacher(int userId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsAffected = db.delete(TABLE_USERS, COLUMN_USER_ID + "=?", new String[]{String.valueOf(userId)});
+        db.close();
+        return rowsAffected > 0;
+    }
+
+    public User getTeacherById(int teacherId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        User teacher = null;
+
+        String query = "SELECT u." + COLUMN_USER_ID + ", u." + COLUMN_NAME + ", u." + COLUMN_EMAIL + ", u." + COLUMN_PASSWORD +
+                ", u." + COLUMN_ROLE + ", u." + COLUMN_PROFILE_PICTURE + ", t." + COLUMN_SPECIALIZATION +
+                ", t." + COLUMN_HIRE_DATE +
+                " FROM " + TABLE_USERS + " u" +
+                " INNER JOIN " + TABLE_TEACHERS + " t ON u." + COLUMN_USER_ID + " = t." + COLUMN_TEACHER_USER_ID +
+                " WHERE u." + COLUMN_USER_ID + " = ?";
+
+        try (Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(teacherId)})) {
+            if (cursor.moveToFirst()) {
+                int userId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL));
+                String password = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD));
+                String role = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROLE));
+                String profilePicture = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PROFILE_PICTURE));
+                String specialization = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SPECIALIZATION));
+                String hireDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HIRE_DATE));
+
+                teacher = new User(userId, name, email, password, role, profilePicture, specialization, hireDate);
+            }
+        } finally {
+            db.close();
+        }
+        return teacher;
+    }
+
+
 
 
 

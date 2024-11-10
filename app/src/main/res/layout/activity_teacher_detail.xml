@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="?android:attr/windowBackground">
+
+    <!-- Teacher Name Input -->
+    <EditText
+        android:id="@+id/teacher_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:layout_marginBottom="12dp"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:padding="10dp" />
+
+    <!-- Teacher Email Input -->
+    <EditText
+        android:id="@+id/teacher_email_input"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginBottom="12dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp" />
+
+    <!-- Teacher Specialization Input -->
+    <EditText
+        android:id="@+id/teacher_specialization_input"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginBottom="12dp"
+        android:hint="Specialization"
+        android:inputType="text"
+        android:padding="10dp" />
+
+    <!-- Teacher Hire Date Input -->
+    <EditText
+        android:id="@+id/teacher_hire_date_input"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:layout_marginBottom="24dp"
+        android:hint="Hire Date"
+        android:inputType="date"
+        android:padding="10dp" />
+
+    <!-- Update Teacher Button -->
+    <Button
+        android:id="@+id/update_teacher_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:backgroundTint="?android:attr/colorAccent"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="12dp"
+        android:padding="12dp" />
+
+    <!-- Delete Teacher Button -->
+    <Button
+        android:id="@+id/delete_teacher_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:textColor="@android:color/white"
+        android:padding="12dp" />
+</LinearLayout>

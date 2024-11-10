@@ -12,4 +12,11 @@
         android:text="Welcome! Explore the information below."
         android:textSize="16sp"
         android:padding="8dp"/>
+
+    <ListView
+        android:id="@+id/contentListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
+
+

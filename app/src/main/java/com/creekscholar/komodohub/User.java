@@ -8,6 +8,10 @@ public class User {
     private String role;
     private String profilePicture;
 
+    // Teacher-specific fields
+    private String specialization;
+    private String hireDate;
+
     // Constructor
     public User(int userId, String name, String email, String password, String role, String profilePicture) {
         this.userId = userId;
@@ -16,6 +20,18 @@ public class User {
         this.password = password;
         this.role = role;
         this.profilePicture = profilePicture;
+    }
+
+    // Constructor for User with teacher-specific fields
+    public User(int userId, String name, String email, String password, String role, String profilePicture, String specialization, String hireDate) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.profilePicture = profilePicture;
+        this.specialization = specialization;
+        this.hireDate = hireDate;
     }
 
     // Empty constructor
@@ -70,4 +86,27 @@ public class User {
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
     }
+
+    // Teacher-specific getters and setters
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
+
+    public String getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(String hireDate) {
+        this.hireDate = hireDate;
+    }
+
+    @Override
+    public String toString() {
+        return name; // Display the name of the user in the ListView
+    }
+
 }
