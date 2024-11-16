@@ -194,8 +194,16 @@
             android:id="@+id/teacherManageContentButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Manage Content"
+            android:text="TEACHER Manage Content"
             android:onClick="onTeacherManageContentButtonClick"/>
+
+        <Button
+            android:id="@+id/teacherGenerateReportButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generate Report"
+            android:onClick="onTeacherGenerateReportButtonClick"/>
+
     </LinearLayout>
 
     <!-- Layout for Students -->

@@ -205,5 +205,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onTeacherGenerateReportButtonClick(View view){
+        Intent intent = new Intent(MainActivity.this, GenerateReportsActivity.class);
+        startActivity(intent);
+    }
+
 
 }
