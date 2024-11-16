@@ -48,128 +48,57 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailEditText.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
 
+//                if (userDAO.authenticateUser(email, password)) {
+//                    // Get the user's role
+//                    String role = userDAO.getUserRole(email);
+//                    int userId = userDAO.getUserId(email);
+//                    long schoolId = userDAO.getSchoolIdByUserId(userId);
+//
+//                    // Save the role in SharedPreferences
+//                    SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putString("UserRole", role);
+//                    editor.putString("UserEmail", email); // For future use
+//                    if(role == "SchoolAdmin"){
+//                        editor.putString("SchoolId", schoolId + ""); // For future use
+//                    }
+//                    editor.apply();
+//
+//
+//
+//                    // Redirect to Main Activity or Dashboard
+//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                    startActivity(intent);
+//                    //finish();
+//                } else {
+//                    Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+//                }
+
                 if (userDAO.authenticateUser(email, password)) {
                     // Get the user's role
                     String role = userDAO.getUserRole(email);
+                    int userId = userDAO.getUserId(email);
+                    long schoolId = userDAO.getSchoolIdByUserId(userId);
 
-                    // Save the role in SharedPreferences
+                    // Save role and SchoolId in SharedPreferences
                     SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("UserRole", role);
                     editor.putString("UserEmail", email); // For future use
+                    if("SchoolAdmin".equals(role)){  // Use equals for string comparison
+                        editor.putString("SchoolId", String.valueOf(schoolId)); // Convert long to String
+                    }
                     editor.apply();
-
 
                     // Redirect to Main Activity or Dashboard
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
-                    //finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-//        textView3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-//            }
-//        });
-
-//        createAccoutButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-//            }
-//        });
-
-
-
-
-//        loginButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                String email = emailEditText.getText().toString();
-//                String password = passwordEditText.getText().toString();
-//                String role = userDao.authenticateUser(email, password);
-//
-//                if(role != null){
-//                    // Direct user based on role
-//                    Toast.makeText(LoginActivity.this, "Its successful", Toast.LENGTH_SHORT).show();
-//                    if(email.equals("albertegi@gmail.com") && password.equals("password123") && role.equals("SystemAdmin")){
-//                        Toast.makeText(LoginActivity.this, "fetching from the db", Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-//                    }
-//                }
-//
-//            }
-//        });
-
-//        loginButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String email = emailEditText.getText().toString();
-//                String password = passwordEditText.getText().toString();
-//                String role = userDao.authenticateUser(email, password);
-//
-//                if (role != null) {
-//                    // Direct user based on role
-//                    if (role.equals("SystemAdmin")) {
-//                        startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-////                    } else if (role.equals("Teacher")) {
-////                        startActivity(new Intent(LoginActivity.this, TeacherHomeActivity.class));
-////                    } else if (role.equals("Student")) {
-////                        startActivity(new Intent(LoginActivity.this, StudentHomeActivity.class));
-////                    } else if (role.equals("SchoolAdmin")) {
-////                        startActivity(new Intent(LoginActivity.this, SchoolAdminHomeActivity.class));
-////                    }
-//                } else {
-//                    Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
-//        usernameEditText = findViewById(R.id.registerUsername);
-//        passwordEditText = findViewById(R.id.registerPassword);
-//        loginBtn = findViewById(R.id.loginButton);
-//        createAccountBtn = findViewById(R.id.registrationSignIn);
-
-//        loginBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String username = usernameEditText.getText().toString();
-//                String password = passwordEditText.getText().toString();
-//
-//                //create an object of the database class (DatabaseConnection)
-//                DatabaseConnection dbConn = new DatabaseConnection(getApplicationContext(), "komodohubDB", null, 1);
-//
-//                if(username.length()==0 || password.length()==0){
-//                    Toast.makeText(getApplicationContext(), "Please fill all details", Toast.LENGTH_SHORT).show();
-//                }else{
-//                    if(dbConn.login(username, password) == 1){
-//                        Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-//                        SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.putString("username",username);
-//                        // to save our data with key and value
-//                        editor.apply();
-//                        startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-//                    }else{
-//                        Toast.makeText(getApplicationContext(), "Invalid Username and Password", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//            }
-//        });
-
-//        createAccountBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-//            }
-//        });
 
 
 

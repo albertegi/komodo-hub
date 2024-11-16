@@ -30,6 +30,16 @@
     <string name="login_email">Email</string>
     <string name="loginPassword">Password</string>
     <string name="teacherName">Name</string>
+    <string name="updateStudentRecord">Update Student Record</string>
+    <string name="manageSchoolAdminTextView">Manage School Admin</string>
+    <string name="adminPasswordHint">Admin Password</string>
+    <string name="manageTeacherEditView">Manage Teacher</string>
+    <string name="teacherPasswordEditText">Password</string>
+    <string name="teacherNameEditText">Name</string>
+    <string name="teacherEmailEditText">Email</string>
+    <string name="teacherDepartmentEditText">Department</string>
+    <string name="teacherQualificationEditText">Qualification</string>
+    <string name="teacherEmploymentDateEditText">Empoyment Date - YY - MM - DD</string>
 
     !-- Array for content types -->
     <string-array name="content_type_array">

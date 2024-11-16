@@ -7,4 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".ManageStudentsActivity">
 
+    <!-- activity_manage_students.xml -->
+    <ListView
+        android:id="@+id/student_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"/>
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

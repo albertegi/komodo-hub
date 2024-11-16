@@ -83,11 +83,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onCommunitiesButtonClick(View view){
-        // Go to Admin related activities (Community Management)
-        Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
-        startActivity(intent);
-    }
 
     public void onSendEmailsButtonClick(View view){
         // Go to Admin related activities (Send Emails)
@@ -163,11 +158,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onAddVisitorButtonClick(View view){
-        Intent intent = new Intent(MainActivity.this, AddVisitorActivity.class);
-        startActivity(intent);
-
-    }
 
 
     public void onVisitorContentButtonClick(View view) {
@@ -177,6 +167,41 @@ public class MainActivity extends AppCompatActivity {
 
     public void manageTeacherButtonClick(View view){
         Intent intent = new Intent(MainActivity.this, ManageTeachersActivity.class);
+        startActivity(intent);
+    }
+
+    public void onManageStudentButtonClick(View view){
+        Intent intent = new Intent(MainActivity.this, ManageStudentsActivity.class);
+        startActivity(intent);
+    }
+
+    public void onManageSchClick(View view){
+        Intent intent = new Intent(MainActivity.this, ManageSchoolAdminActivity.class);
+        startActivity(intent);
+    }
+
+    public void entitiesManagementButtonClick(View view){
+        Intent intent = new Intent(MainActivity.this, ManageEntitiesActivity.class);
+        startActivity(intent);
+    }
+
+    public void onTeacherManagementButtonClick(View view){
+        Intent intent = new Intent(MainActivity.this, TeacherManagementActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClassManagementButtonClick(View view){
+        Intent intent = new Intent(MainActivity.this, ClassManagementActivity.class);
+        startActivity(intent);
+    }
+
+    public void onStudentManagementButtonClick(View view){
+        Intent intent = new Intent(MainActivity.this, StudentManagementActivity.class);
+        startActivity(intent);
+    }
+
+    public void onTeacherManageContentButtonClick(View view){
+        Intent intent = new Intent(MainActivity.this, TeacherDashboardActivity.class);
         startActivity(intent);
     }
 

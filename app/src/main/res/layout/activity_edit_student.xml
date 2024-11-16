@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Name Input Field -->
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/updateStudentRecord"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/student_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Name"
+        android:inputType="textPersonName" />
+
+    <!-- Email Input Field -->
+    <EditText
+        android:id="@+id/student_email_input"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
+
+    <!-- Grade Level Input Field -->
+    <EditText
+        android:id="@+id/student_grade_input"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Grade Level"
+        android:inputType="number" />
+
+    <!-- Enrolled Program Input Field -->
+    <EditText
+        android:id="@+id/student_program_input"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Enrolled Program"
+        android:inputType="text" />
+
+    <!-- Update Button -->
+    <Button
+        android:id="@+id/update_student_button"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="Update" />
+
+    <!-- Delete Button -->
+    <Button
+        android:id="@+id/delete_student_button"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:text="Delete"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

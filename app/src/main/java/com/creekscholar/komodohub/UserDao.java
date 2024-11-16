@@ -96,6 +96,50 @@ public class UserDao {
         return null;
     }
 
+    public int getUserId(String email) {
+        SQLiteDatabase db = databaseConnection.getReadableDatabase();
+        String[] columns = {DatabaseConnection.COLUMN_USER_ID};
+        String selection = DatabaseConnection.COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = {email};
+
+        Cursor cursor = db.query(DatabaseConnection.TABLE_USERS, columns, selection, selectionArgs, null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int userIdIndex = cursor.getColumnIndex(DatabaseConnection.COLUMN_USER_ID);
+                if (userIdIndex != -1) {  // Ensure the column exists
+                    int user_id = cursor.getInt(userIdIndex);
+                    cursor.close();
+                    return user_id;
+                }
+            }
+            cursor.close();
+        }
+        return -1;
+    }
+
+    public int getSchoolIdByUserId(int userId) {
+        SQLiteDatabase db = databaseConnection.getReadableDatabase();
+        int schoolId = -1; // Default value if no school is found
+        String query = "SELECT " + DatabaseConnection.COLUMN_SCHOOL_ID + " FROM " + DatabaseConnection.TABLE_SCHOOLS +
+                " WHERE " + DatabaseConnection.COLUMN_SCHOOL_ADMIN_ID + " = ?";
+        Cursor cursor = null;
+
+        try {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+            if (cursor != null && cursor.moveToFirst()) {
+                schoolId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseConnection.COLUMN_SCHOOL_ID));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return schoolId;
+    }
+
 
 
 }

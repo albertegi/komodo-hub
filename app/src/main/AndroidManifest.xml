@@ -13,6 +13,39 @@
         android:theme="@style/Theme.KomodoHub"
         tools:targetApi="31">
         <activity
+            android:name=".ManageStudentContentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MessagingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GenerateReportsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AssessStudentsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TeacherDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ClassManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TeacherManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageEntitiesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageSchoolAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditStudentActivity"
+            android:exported="false" />
+        <activity
             android:name=".ManageStudentsActivity"
             android:exported="false" />
         <activity

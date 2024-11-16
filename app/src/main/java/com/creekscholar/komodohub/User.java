@@ -8,6 +8,9 @@ public class User {
     private String role;
     private String profilePicture;
 
+    private String gradeLevel;     // Add this for student grade level
+    private String enrolledProgram; // Add this for student program
+
     // Teacher-specific fields
     private String specialization;
     private String hireDate;
@@ -32,6 +35,22 @@ public class User {
         this.profilePicture = profilePicture;
         this.specialization = specialization;
         this.hireDate = hireDate;
+    }
+
+
+
+    // Constructor for User with student-specific fields
+    public User(int userId, String name, String email, String password, String role, String profilePicture, String specialization, String hireDate, String gradeLevel, String enrolledProgram) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.profilePicture = profilePicture;
+        this.specialization = specialization;
+        this.hireDate = hireDate;
+        this.gradeLevel = gradeLevel;
+        this.enrolledProgram = enrolledProgram;
     }
 
     // Empty constructor
@@ -102,6 +121,22 @@ public class User {
 
     public void setHireDate(String hireDate) {
         this.hireDate = hireDate;
+    }
+
+    public String getGradeLevel() {
+        return gradeLevel;
+    }
+
+    public void setGradeLevel(String gradeLevel) {
+        this.gradeLevel = gradeLevel;
+    }
+
+    public String getEnrolledProgram() {
+        return enrolledProgram;
+    }
+
+    public void setEnrolledProgram(String enrolledProgram) {
+        this.enrolledProgram = enrolledProgram;
     }
 
     @Override

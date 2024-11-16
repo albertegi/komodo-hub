@@ -30,6 +30,13 @@
             android:onClick="onAdminButtonClick"/>
 
         <Button
+            android:id="@+id/manageSchools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Sch."
+            android:onClick="onManageSchClick"/>
+
+        <Button
             android:id="@+id/manageCommunitiesButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,11 +82,32 @@
             android:onClick="onAddTeacherButtonClick"/>
 
         <Button
-            android:id="@+id/manageTeacherButton"
+            android:id="@+id/teacherManagementButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Manage Teacher"
-            android:onClick="manageTeacherButtonClick"/>
+            android:text="Management of Teacher Teacher"
+            android:onClick="onTeacherManagementButtonClick"/>
+
+        <Button
+            android:id="@+id/classManagementButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Management of Class"
+            android:onClick="onClassManagementButtonClick"/>
+
+        <Button
+            android:id="@+id/studentManagementButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Management of Student"
+            android:onClick="onStudentManagementButtonClick"/>
+
+        <Button
+            android:id="@+id/entitiesManagementButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Management"
+            android:onClick="entitiesManagementButtonClick"/>
 
         <Button
             android:id="@+id/viewTeacherButton"
@@ -94,6 +122,13 @@
             android:layout_height="wrap_content"
             android:text="Add Student"
             android:onClick="onAddStudentButtonClick"/>
+
+        <Button
+            android:id="@+id/manageStudentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Student"
+            android:onClick="onManageStudentButtonClick"/>
 
         <Button
             android:id="@+id/viewStudentButton"
@@ -154,6 +189,13 @@
             android:layout_height="wrap_content"
             android:text="Manage Content"
             android:onClick="onTeacherButtonClick"/>
+
+        <Button
+            android:id="@+id/teacherManageContentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Content"
+            android:onClick="onTeacherManageContentButtonClick"/>
     </LinearLayout>
 
     <!-- Layout for Students -->
