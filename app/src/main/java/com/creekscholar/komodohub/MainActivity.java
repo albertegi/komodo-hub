@@ -84,11 +84,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void onSendEmailsButtonClick(View view){
-        // Go to Admin related activities (Send Emails)
-        Intent intent = new Intent(MainActivity.this, SendEmailsActivity.class);
-        startActivity(intent);
-    }
+//    public void onSendEmailsButtonClick(View view){
+//        // Go to Admin related activities (Send Emails)
+//        Intent intent = new Intent(MainActivity.this, SendEmailsActivity.class);
+//        startActivity(intent);
+//    }
 
     public void exitButtonClick(View view){
         // Exit
@@ -110,33 +110,33 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 //
-    public void onVisitorButtonClick(View view) {
-        // For visitors, allow them to explore basic public information
-        Intent intent = new Intent(MainActivity.this, VisitorActivity.class);
-        startActivity(intent);
-    }
+//    public void onVisitorButtonClick(View view) {
+//        // For visitors, allow them to explore basic public information
+//        Intent intent = new Intent(MainActivity.this, VisitorActivity.class);
+//        startActivity(intent);
+//    }
 
 
-    public void onAddTeacherButtonClick(View view){
-        // for Adding of teachers
-        Intent intent = new Intent(MainActivity.this, AddTeacherActivity.class);
-        //intent.putExtra("SchoolAdminID",schoolAdminId);
-        startActivity(intent);
-    }
+//    public void onAddTeacherButtonClick(View view){
+//        // for Adding of teachers
+//        Intent intent = new Intent(MainActivity.this, AddTeacherActivity.class);
+//        //intent.putExtra("SchoolAdminID",schoolAdminId);
+//        startActivity(intent);
+//    }
 
-    public void onAddStudentButtonClick(View view){
-        // for Adding of students
-        Intent intent = new Intent(MainActivity.this, AddStudentActivity.class);
-        //intent.putExtra("SchoolAdminID",schoolAdminId);
-        startActivity(intent);
-    }
+//    public void onAddStudentButtonClick(View view){
+//        // for Adding of students
+//        Intent intent = new Intent(MainActivity.this, AddStudentActivity.class);
+//        //intent.putExtra("SchoolAdminID",schoolAdminId);
+//        startActivity(intent);
+//    }
 
-    public void onAllocateTeacherButtonClick(View view){
-        // for Adding of classes
-        Intent intent = new Intent(MainActivity.this, AddClassActivity.class);
-        //intent.putExtra("SchoolAdminID",schoolAdminId);
-        startActivity(intent);
-    }
+//    public void onAllocateTeacherButtonClick(View view){
+//        // for Adding of classes
+//        Intent intent = new Intent(MainActivity.this, AddClassActivity.class);
+//        //intent.putExtra("SchoolAdminID",schoolAdminId);
+//        startActivity(intent);
+//    }
 
     public void onStudentSightingReportButtonClick(View view){
         // for Adding of Sighting Reports
@@ -152,18 +152,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onTeacherAddProgressReportButtonClick(View view){
-        // for Adding of Learning Contents
-        Intent intent = new Intent(MainActivity.this, AddProgressReportActivity.class);
-        startActivity(intent);
-    }
 
 
 
-    public void onVisitorContentButtonClick(View view) {
-        Intent intent = new Intent(MainActivity.this, VisitorDashboardActivity.class);
-        startActivity(intent);
-    }
+//    public void onVisitorContentButtonClick(View view) {
+//        Intent intent = new Intent(MainActivity.this, VisitorDashboardActivity.class);
+//        startActivity(intent);
+//    }
 
     public void manageTeacherButtonClick(View view){
         Intent intent = new Intent(MainActivity.this, ManageTeachersActivity.class);
@@ -207,6 +202,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void onTeacherGenerateReportButtonClick(View view){
         Intent intent = new Intent(MainActivity.this, GenerateReportsActivity.class);
+        startActivity(intent);
+    }
+
+    public void onStudentViewLearningContentButtonClick(View view){
+//
+
+        Intent intent = new Intent(MainActivity.this, ViewContentActivity.class);
+        intent.putExtra("ClassID", 1);
         startActivity(intent);
     }
 

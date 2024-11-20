@@ -53,6 +53,10 @@ public class User {
         this.enrolledProgram = enrolledProgram;
     }
 
+    public User(String name) {
+        this.name = name;
+    }
+
     // Empty constructor
     public User() {
     }

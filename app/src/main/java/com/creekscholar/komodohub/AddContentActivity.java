@@ -89,11 +89,6 @@ public class AddContentActivity extends AppCompatActivity {
         // Listener for submitting content
         submitButton.setOnClickListener(v -> submitContent());
 
-//        SharedPreferences preferences = getSharedPreferences("UserDetails", MODE_PRIVATE);
-//        int classID = preferences.getInt("ClassID", -1);
-//        int teacherID = preferences.getInt("TeacherID", -1);
-
-// Proceed similarly with submitContent method
 
     }
 

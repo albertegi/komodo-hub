@@ -46,19 +46,7 @@ public class SightingReportsActivity extends AppCompatActivity {
         Button submitButton = findViewById(R.id.submitButton);
         Button addPhotoButton = findViewById(R.id.addPhotoButton);
 
-//        databaseConnection = new DatabaseConnection(this);
 
-//        // Initialize views
-//        speciesNameInput = findViewById(R.id.speciesNameInput);
-//        descriptionInput = findViewById(R.id.descriptionInput);
-//        locationInput = findViewById(R.id.locationInput);
-//        reportedDateInput = findViewById(R.id.reportedDateInput);  // New reported date field
-//        selectedPhotoView = findViewById(R.id.selectedPhotoView);  // Updated to match ImageView ID
-//
-//        Button submitButton = findViewById(R.id.submitButton);
-//        Button addPhotoButton = findViewById(R.id.addPhotoButton);
-
-// Initialize the database connection
         databaseConnection = new DatabaseConnection(this);
 
         // Listener for adding a photo
@@ -96,14 +84,6 @@ public class SightingReportsActivity extends AppCompatActivity {
     }
 
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == REQUEST_CODE_PHOTO && resultCode == RESULT_OK && data != null) {
-//            photoUri = data.getData();
-//            photoImageView.setImageURI(photoUri); // Display the selected photo
-//        }
-//    }
 
     private void submitSightingReport() {
         String speciesName = speciesNameInput.getText().toString().trim();

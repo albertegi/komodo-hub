@@ -1052,6 +1052,40 @@ public class DatabaseConnection extends SQLiteOpenHelper {
 
 
 
+    public Cursor getPublishedContent(int classId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            cursor = db.rawQuery(
+                    "SELECT Title, Description, FilePath FROM " + TABLE_CONTENT + " WHERE ClassID = ?",
+                    new String[]{String.valueOf(classId)}
+            );
+        } catch (Exception e) {
+            Log.e("DB_QUERY_ERROR", "Error fetching published content for ClassID " + classId, e);
+        }
+
+        return cursor; // Return null if an exception occurs
+    }
+
+
+
+
+
+    public Cursor getStudentPublishedContent() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT SpeciesName, Description, Location, ReportedDate, Status FROM SightingReports";
+        return db.rawQuery(query, null);
+    }
+
+
+
+
+
+
+
+
+
 
 
 

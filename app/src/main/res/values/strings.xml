@@ -40,6 +40,7 @@
     <string name="teacherDepartmentEditText">Department</string>
     <string name="teacherQualificationEditText">Qualification</string>
     <string name="teacherEmploymentDateEditText">Empoyment Date - YY - MM - DD</string>
+    <string name="viewAsGuest">Continue As Visitor</string>
 
     !-- Array for content types -->
     <string-array name="content_type_array">

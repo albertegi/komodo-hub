@@ -21,6 +21,20 @@ public class Content {
         this.publishDate = publishDate;
         this.classId = classId;
         this.teacherId = teacherId;
+
+    }
+
+    public Content(String title, String description, String filePath, String publishDate) {
+        this.title = title;
+        this.description = description;
+        this.filePath = filePath;
+        this.publishDate = publishDate;
+    }
+
+    public Content(String title, String description, String filePath) {
+        this.title = title;
+        this.description = description;
+        this.filePath = filePath;
     }
 
     // Getters and Setters

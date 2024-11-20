@@ -5,9 +5,6 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class TeacherDashboardActivity extends AppCompatActivity {
 
@@ -30,7 +27,12 @@ public class TeacherDashboardActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnManageContent).setOnClickListener(v -> {
-            startActivity(new Intent(this, ManageContentActivity.class));
+            startActivity(new Intent(this, ManageStudentContentActivity.class));
         });
+
+        findViewById(R.id.btnViewStudentContent).setOnClickListener(v -> {
+            startActivity(new Intent(this, ViewContentActivity.class));
+        });
+
     }
 }

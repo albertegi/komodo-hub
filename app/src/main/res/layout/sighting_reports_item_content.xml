@@ -1,0 +1,71 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white"
+    android:elevation="2dp">
+
+    <!-- Title of the content -->
+    <TextView
+        android:id="@+id/tvSpeciesName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Species Name"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@android:color/black" />
+
+    <!-- Description of the content -->
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description goes here."
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:paddingTop="4dp" />
+
+    <!-- Location of the content -->
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:paddingTop="4dp" />
+
+    <!-- Report date of the content -->
+    <TextView
+        android:id="@+id/tvReportedDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reported Date"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:paddingTop="4dp" />
+
+    <!-- Status of the content -->
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:paddingTop="4dp" />
+
+    <!-- Student name -->
+    <TextView
+        android:id="@+id/tvStudentName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Student Name"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:paddingTop="4dp"
+        android:textStyle="italic" />
+
+</LinearLayout>

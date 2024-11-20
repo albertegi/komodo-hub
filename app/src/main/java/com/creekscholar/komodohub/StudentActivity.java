@@ -26,14 +26,14 @@ public class StudentActivity extends AppCompatActivity {
         viewContentButton = findViewById(R.id.viewContentButton);
         reportSightingsButton = findViewById(R.id.reportSightingsButton);
 
-        viewContentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Implement logic to view learning content or navigate to LearningContentActivity
-                Intent intent = new Intent(StudentActivity.this, LearningContentActivity.class);
-                startActivity(intent);
-            }
-        });
+//        viewContentButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Implement logic to view learning content or navigate to LearningContentActivity
+//                Intent intent = new Intent(StudentActivity.this, LearningContentActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         reportSightingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
