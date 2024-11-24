@@ -30,8 +30,11 @@ public class TeacherDashboardActivity extends AppCompatActivity {
             startActivity(new Intent(this, ManageStudentContentActivity.class));
         });
 
-        findViewById(R.id.btnViewStudentContent).setOnClickListener(v -> {
-            startActivity(new Intent(this, ViewContentActivity.class));
+//        findViewById(R.id.btnViewStudentContent).setOnClickListener(v -> {
+//            startActivity(new Intent(this, ViewContentActivity.class));
+//        });
+        findViewById(R.id.btnViewStudentContent).setOnClickListener(v ->{
+            startActivity(new Intent(this, ViewStudentContentActivity.class));
         });
 
     }

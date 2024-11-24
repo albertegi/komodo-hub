@@ -90,7 +90,7 @@ public class SightingReportsActivity extends AppCompatActivity {
         String description = descriptionInput.getText().toString().trim();
         String location = locationInput.getText().toString().trim();
         String reportedDate = java.text.DateFormat.getDateInstance().format(new java.util.Date());
-        String status = "Pending"; // Default status
+        String status = "Approved"; // Default status
 
         if (speciesName.isEmpty() || location.isEmpty()) {
             Toast.makeText(this, "Species name and location are required!", Toast.LENGTH_LONG).show();

@@ -225,26 +225,26 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     public static final String TABLE_PROGRESS_REPORTS = "ProgressReports";
 
     // Column names for ProgressReports table
-    public static final String COLUMN_REPORT_ID = "ReportID";
-    public static final String COLUMN_GRADE = "Grade";
-    public static final String COLUMN_FEEDBACK = "Feedback";
-    public static final String COLUMN_SUBMISSION_DATE = "SubmissionDate";
-    public static final String COLUMN_PROGRESS_REPORT_STUDENT_ID = "StudentID";
-    public static final String COLUMN_PROGRESS_REPORT_TEACHER_ID = "TeacherID";
-    public static final String COLUMN_PROGRESS_REPORT_CLASS_ID = "ClassID";
-
-    private static final String CREATE_TABLE_PROGRESS_REPORTS = "CREATE TABLE " + TABLE_PROGRESS_REPORTS + " ("
-            + COLUMN_REPORT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_GRADE + " TEXT, "
-            + COLUMN_FEEDBACK + " TEXT, "
-            + COLUMN_SUBMISSION_DATE + " TEXT NOT NULL, "
-            + COLUMN_STUDENT_ID + " INTEGER, "
-            + COLUMN_TEACHER_ID + " INTEGER, "
-            + COLUMN_CLASS_ID + " INTEGER, "
-            + "FOREIGN KEY (" + COLUMN_PROGRESS_REPORT_STUDENT_ID + ") REFERENCES Students(StudentID) ON DELETE CASCADE, "
-            + "FOREIGN KEY (" + COLUMN_PROGRESS_REPORT_TEACHER_ID + ") REFERENCES Users(UserID) ON DELETE CASCADE, "
-            + "FOREIGN KEY (" + COLUMN_PROGRESS_REPORT_CLASS_ID + ") REFERENCES Classes(ClassID) ON DELETE CASCADE"
-            + ");";
+//    public static final String COLUMN_REPORT_ID = "ReportID";
+//    public static final String COLUMN_GRADE = "Grade";
+//    public static final String COLUMN_FEEDBACK = "Feedback";
+//    public static final String COLUMN_SUBMISSION_DATE = "SubmissionDate";
+//    public static final String COLUMN_PROGRESS_REPORT_STUDENT_ID = "StudentID";
+//    public static final String COLUMN_PROGRESS_REPORT_TEACHER_ID = "TeacherID";
+//    public static final String COLUMN_PROGRESS_REPORT_CLASS_ID = "ClassID";
+//
+//    private static final String CREATE_TABLE_PROGRESS_REPORTS = "CREATE TABLE " + TABLE_PROGRESS_REPORTS + " ("
+//            + COLUMN_REPORT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+//            + COLUMN_GRADE + " TEXT, "
+//            + COLUMN_FEEDBACK + " TEXT, "
+//            + COLUMN_SUBMISSION_DATE + " TEXT NOT NULL, "
+//            + COLUMN_STUDENT_ID + " INTEGER, "
+//            + COLUMN_TEACHER_ID + " INTEGER, "
+//            + COLUMN_CLASS_ID + " INTEGER, "
+//            + "FOREIGN KEY (" + COLUMN_PROGRESS_REPORT_STUDENT_ID + ") REFERENCES Students(StudentID) ON DELETE CASCADE, "
+//            + "FOREIGN KEY (" + COLUMN_PROGRESS_REPORT_TEACHER_ID + ") REFERENCES Users(UserID) ON DELETE CASCADE, "
+//            + "FOREIGN KEY (" + COLUMN_PROGRESS_REPORT_CLASS_ID + ") REFERENCES Classes(ClassID) ON DELETE CASCADE"
+//            + ");";
 
 
 
@@ -268,7 +268,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_STUDENTS);
         db.execSQL(CREATE_TABLE_SIGHTING_REPORTS);   // New SightingReports table
         db.execSQL(CREATE_TABLE_CONTENT);  // Create the Content table
-        db.execSQL(CREATE_TABLE_PROGRESS_REPORTS);
+        //db.execSQL(CREATE_TABLE_PROGRESS_REPORTS);
         db.execSQL(CREATE_TABLE_ASSESSMENTS);
         Log.d("DatabaseConnection", "Users table created");
         db.execSQL(INSERT_SYSTEM_ADMIN);
@@ -1077,6 +1077,18 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         String query = "SELECT SpeciesName, Description, Location, ReportedDate, Status FROM SightingReports";
         return db.rawQuery(query, null);
     }
+
+    public Cursor getSightingReportsForVisitor() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Query to fetch only the required fields for the visitor
+        String query = "SELECT SpeciesName, Description, Photo, Location, ReportedDate " +
+                "FROM SightingReports " +
+                "WHERE Status = 'Approved'"; // Ensure only approved reports are shown
+
+        return db.rawQuery(query, null);
+    }
+
 
 
 

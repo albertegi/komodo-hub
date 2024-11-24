@@ -1,22 +1,36 @@
-<!-- res/layout/activity_visitor_dashboard.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:padding="16dp">
+
+<TextView
+    android:id="@+id/informationTextView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="wrap_content"
+    android:text="Welcome! Explore the information below."
+    android:textSize="16sp"
+    android:padding="8dp"/>
 
-    <TextView
-        android:id="@+id/informationTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Welcome! Explore the information below."
-        android:textSize="16sp"
-        android:padding="8dp"/>
+<TextView
+    android:id="@+id/tvVisitorDashboardHeader"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Sighting Contents"
+    android:textStyle="bold"
+    android:textAlignment="center"
+    android:textSize="22sp"
+    android:textColor="@android:color/black"
+    android:layout_marginBottom="8dp" />
 
-    <ListView
-        android:id="@+id/contentListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rvSightingReports"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:scrollbars="vertical" />
 </LinearLayout>
+
 
 

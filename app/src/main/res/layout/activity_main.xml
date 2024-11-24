@@ -138,12 +138,12 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <Button
-            android:id="@+id/explorePublicContentButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Explore Public Content"
-            android:onClick="onVisitorContentButtonClick"/>
+<!--        <Button-->
+<!--            android:id="@+id/explorePublicContentButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Explore Public Content"-->
+<!--            android:onClick="onVisitorContentButtonClick"/>-->
 
         <Button
             android:id="@+id/exitPublicContentButton"
